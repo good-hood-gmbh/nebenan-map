@@ -36,5 +36,5 @@ export default {
     [14.39040, 52.2155550],
   ],
 
-  profileImage: 'https://nebenan.de/images/users/male_01.jpg',
+  profileImage: '/images/users/male_01.jpg',
 };

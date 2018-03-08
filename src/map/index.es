@@ -86,7 +86,7 @@ class Map extends PureComponent {
     const options = getMapOptions(global, props);
     const map = createMap(this.node, options);
 
-    const tile = createTile(getTileUrl(), getTileOptions(props.credentials));
+    const tile = createTile(getTileUrl(props.credentials), getTileOptions(props.credentials));
     map.addLayer(tile);
     this.tile = tile;
 
@@ -161,10 +161,7 @@ Map.propTypes = {
     PropTypes.arrayOf(PropTypes.number),
   ),
 
-  credentials: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-  }).isRequired,
+  credentials: PropTypes.object,
 
   defaultView: PropTypes.arrayOf(PropTypes.number),
   defaultZoom: PropTypes.number,

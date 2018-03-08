@@ -1,6 +1,5 @@
 import { getMedia, media } from '../utils';
 
-
 const controlsProps = [
   'doubleClickZoom',
   'boxZoom',
@@ -28,18 +27,22 @@ export const getMapOptions = (node, { noAttribution, locked, lockedMobile }) => 
   return { ...base, scrollWheelZoom: false, attributionControl: !noAttribution };
 };
 
-export const getTileUrl = () => (
-  'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}'
+export const getTileUrl = (credentials) => (
+  credentials ?
+    'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}' :
+    'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 );
 
 export const getTileOptions = (credentials) => {
-  const { id, token } = credentials;
+  const osm = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+  if (!credentials) return { attribution: osm };
+
   const attribution =
-    `Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,
+    `Map data ${osm},
     <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,
     Imagery © <a href="http://mapbox.com">Mapbox</a>`;
 
-  return { id, token, attribution };
+  return Object.assign({ attribution }, credentials);
 };
 
 export const isViewChanged = (props, nextProps) => viewProps.some((prop) => (

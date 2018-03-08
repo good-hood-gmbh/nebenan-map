@@ -16,8 +16,8 @@
     "prepublishOnly": "NODE_ENV=production npm run gulp compile",
     "lint": "eslint --ext .es,.js ./",
     "lint:tofile": "eslint --ext .es,.js --no-color -o ./eslint-report.log ./",
-    "test": "env TZ='Europe/Berlin' mocha \"test/**/*.js\"",
-    "test:tofile": "mocha --no-colors -R spec \"test/**/*.js\" 2>&1 | tee test-report.log",
+    "test": "npm run prepublishOnly && env TZ='Europe/Berlin' mocha \"test/**/*.js\"",
+    "test:tofile": "npm run prepublishOnly && mocha --no-colors -R spec \"test/**/*.js\" 2>&1 | tee test-report.log",
     "start": "NODE_ENV=production npm run gulp"
   },
   "devDependencies": {
