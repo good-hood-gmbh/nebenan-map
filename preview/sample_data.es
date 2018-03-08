@@ -1,27 +1,40 @@
 export default {
-  lorem: `Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat.
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-
-  tooltip: 'Design is like a joke. If it needs explaining, it\'s probably bad.',
-
-  listOptions: [
-    { key: 'No selection', value: null },
-    { key: 'One', value: 1 },
-    { key: 'Two', value: 2 },
-    { key: 'Three', value: 3 },
+  polygons: [
+    [
+      [14.4108009338379, 52.2681573737682],
+      [14.3565559387207, 52.2677371676084],
+      [14.3441963195801, 52.2362103536887],
+      [14.3757820129395, 52.2214901719116],
+      [14.4416999816895, 52.2055027338494],
+      [14.4787788391113, 52.2391538043905],
+      [14.4547462463379, 52.2681573737682],
+      [14.4108009338379, 52.2681573737682],
+    ],
+    [
+      [14.4044923782349, 52.1968821185267],
+      [14.4066381454468, 52.1967440172594],
+      [14.4073247909546, 52.1967703222957],
+      [14.4086530213826, 52.1968913254231],
+      [14.4138457780355, 52.1957601978805],
+      [14.4129016404622, 52.1929980212912],
+      [14.4098117356771, 52.1905513786906],
+      [14.4062304496765, 52.1936793739696],
+      [14.3965938096517, 52.193340014369],
+      [14.402003288269, 52.1951130746002],
+      [14.4026679137864, 52.1951589785975],
+      [14.4026679137865, 52.1951589785975],
+      [14.4027125270782, 52.1951620599243],
+      [14.4035267829895, 52.1952182985131],
+      [14.4028615951538, 52.1956523445209],
+      [14.4044923782349, 52.1968821185267],
+    ],
   ],
 
-  optionValues: [
-    { imageClass: 'preview-fancy_image', key: 'Eins', value: 1 },
-    { imageClass: 'preview-fancy_image', key: 'Zwei', value: 2 },
-    { imageClass: 'preview-fancy_image', key: 'Drei', value: 3 },
-    { imageClass: 'preview-fancy_image', key: 'Vier', value: 4 },
-    { imageClass: 'preview-fancy_image', key: 'Fünf', value: 5 },
-    { imageClass: 'preview-fancy_image', key: 'Sechs', value: 6 },
+  markers: [
+    [14.42649, 52.2387688],
+    [14.46648, 52.2187688],
+    [14.39040, 52.2155550],
   ],
+
+  profileImage: 'https://nebenan.de/images/users/male_01.jpg',
 };

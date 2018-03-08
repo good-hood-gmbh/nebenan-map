@@ -4,7 +4,6 @@ import omit from 'lodash/omit';
 import classNames from 'classnames';
 
 import { reverse } from '../utils';
-import { bindTo } from '../utils';
 import { getMapOptions, getTileUrl, getTileOptions, isViewChanged } from './utils';
 
 
@@ -17,10 +16,8 @@ class Map extends PureComponent {
       isReady: false,
     };
 
-    bindTo(this,
-      'addElement',
-      'removeElement',
-    );
+    this.addElement = this.addElement.bind(this);
+    this.removeElement = this.removeElement.bind(this);
   }
 
   componentDidMount() { this.create(this.props); }

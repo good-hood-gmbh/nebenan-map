@@ -1,4 +1,4 @@
-nebenan-form
+nebenan-map
 ============
 
-React form components
+React map components
