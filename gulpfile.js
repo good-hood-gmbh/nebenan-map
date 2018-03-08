@@ -24,7 +24,7 @@ const scripts = [
   'src/**/*.es',
   'preview/**/*.es',
   'preview/**/*.js',
-  '!preview/public/*.js',
+  '!preview/public/**/*.js',
   '!preview/server.js',
 ];
 

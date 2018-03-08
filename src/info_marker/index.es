@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Marker from '../marker';
 
 
-const IMarker = (props) => {
+const InfoMarker = (props) => {
   const { small, className, ...cleanProps } = props;
   const iconClass = classNames('c-info_marker', className, { 'is-small': small });
 
@@ -17,13 +17,13 @@ const IMarker = (props) => {
   return <Marker {...cleanProps} divIcon={icon} />;
 };
 
-IMarker.defaultProps = {
+InfoMarker.defaultProps = {
   small: false,
 };
 
-IMarker.propTypes = {
+InfoMarker.propTypes = {
   className: PropTypes.string,
   small: PropTypes.bool.isRequired,
 };
 
-export default IMarker;
+export default InfoMarker;
