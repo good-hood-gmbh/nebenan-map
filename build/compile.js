@@ -13,6 +13,7 @@ const stylusOptions = {
     `${__dirname}/../client`,
     `${__dirname}/../node_modules`,
   ],
+  'include css': true,
   urlfunc: 'embedurl',
   errors: true,
 };
