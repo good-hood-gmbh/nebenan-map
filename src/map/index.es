@@ -116,13 +116,15 @@ class Map extends PureComponent {
     const className = classNames('c-map', this.props.className);
     const cleanProps = omit(this.props,
       'children',
+      'animate',
       'locked',
       'lockedMobile',
-      'animate',
       'noAttribution',
       'bounds',
+      'credentials',
       'defaultView',
       'defaultZoom',
+      'onLoad',
     );
 
     const ref = (el) => { this.node = el; };
