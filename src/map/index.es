@@ -6,6 +6,8 @@ import classNames from 'classnames';
 import { reverse } from '../utils';
 import { getMapOptions, getTileUrl, getTileOptions, isViewChanged } from './utils';
 
+import { Provider } from './context';
+
 
 class Map extends PureComponent {
   constructor(props) {
@@ -24,14 +26,9 @@ class Map extends PureComponent {
   componentDidUpdate(prevProps) { this.update(prevProps); }
   componentWillUnmount() { this.destroy(); }
 
-  getChildContext() {
-    return {
-      map: {
-        element: this.map,
-        addElement: this.addElement,
-        removeElement: this.removeElement,
-      },
-    };
+  getDefaultContext() {
+    const { map, addElement, removeElement } = this;
+    return { map, addElement, removeElement };
   }
 
   getElementsBounds() {
@@ -43,6 +40,7 @@ class Map extends PureComponent {
 
   setMap(map) {
     this.map = map;
+    this.staticContext = this.getDefaultContext();
     this.setState({ isReady: Boolean(map) });
   }
 
@@ -133,15 +131,15 @@ class Map extends PureComponent {
     let children;
     if (this.state.isReady) children = this.props.children;
 
-    return <article {...cleanProps} {...{ className, ref }}>{children}</article>;
+    return (
+      <article {...cleanProps} {...{ className, ref }}>
+        <Provider value={this.staticContext}>
+          {children}
+        </Provider>
+      </article>
+    );
   }
 }
-
-Map.childContextTypes = {
-  map: PropTypes.object,
-};
-
-Map.contextTypes = null;
 
 Map.defaultProps = {
   animate: false,

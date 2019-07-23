@@ -12,23 +12,25 @@ import MapComponent from '../base';
 
 
 class Circle extends MapComponent {
-  update(nextProps, nextContext) {
+  update() {
     this.destroy();
-    this.create(nextProps, nextContext);
+    this.create();
   }
 
-  create(props, context) {
+  create() {
     const { circle: createCircle } = require('leaflet');
-    const { center } = props;
-    const options = getOptions(props);
+    const { map } = this.context;
+    const { center } = this.props;
+    const options = getOptions(this.props);
     const circle = createCircle(reverse(center), options);
 
-    context.map.element.addLayer(circle);
+    map.addLayer(circle);
     this.circle = circle;
   }
 
   destroy() {
-    this.context.map.element.removeLayer(this.circle);
+    const { map } = this.context;
+    map.removeLayer(this.circle);
     this.circle = null;
   }
 

@@ -1,20 +1,20 @@
 import { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import MapContext from '../map/context';
 
 
 class MapComponent extends PureComponent {
   componentDidMount() {
-    this.create(this.props, this.context);
-    this.context.map.addElement(this);
+    this.create();
+    this.context.addElement(this);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.update(nextProps, nextContext);
+  componentDidUpdate(prevProps) {
+    this.update(prevProps);
   }
 
   componentWillUnmount() {
     this.destroy();
-    this.context.map.removeElement(this);
+    this.context.removeElement(this);
   }
 
   // Override if element can provide bounds
@@ -26,8 +26,6 @@ class MapComponent extends PureComponent {
   // destroy() {}
 }
 
-MapComponent.contextTypes = {
-  map: PropTypes.object,
-};
+MapComponent.contextType = MapContext;
 
 export default MapComponent;

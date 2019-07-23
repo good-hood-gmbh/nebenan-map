@@ -15,9 +15,9 @@ import MapComponent from '../base';
 
 
 class Polygon extends MapComponent {
-  update(nextProps, nextContext) {
+  update() {
     this.destroy();
-    this.create(nextProps, nextContext);
+    this.create();
   }
 
   getBounds() {
@@ -25,21 +25,25 @@ class Polygon extends MapComponent {
     return this.polygon.getBounds();
   }
 
-  create(props, context) {
+  create() {
     const { polygon: createPolygon } = require('leaflet');
-    const { area, onClick } = props;
-    const options = getOptions(props);
+    const { area, onClick } = this.props;
+    const { map } = this.context;
+    console.warn('MAP', map)
+    const options = getOptions(this.props);
     const polygon = createPolygon(area.map(reverse), options);
 
     if (onClick) polygon.on('click', onClick);
 
-    context.map.element.addLayer(polygon);
+    map.addLayer(polygon);
     this.polygon = polygon;
   }
 
   destroy() {
+    const { map } = this.context;
+
     this.polygon.off();
-    this.context.map.element.removeLayer(this.polygon);
+    map.removeLayer(this.polygon);
     this.polygon = null;
   }
 
