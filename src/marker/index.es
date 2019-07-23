@@ -75,7 +75,6 @@ class Marker extends MapComponent {
       onPopupOpen,
       onPopupClose,
     } = this.props;
-    const { map } = this.context;
 
     const icon = getIcon(this.leaflet, divIcon, defaultIcon);
     const interactive = Boolean(onClick);
@@ -86,13 +85,12 @@ class Marker extends MapComponent {
     if (onPopupClose) marker.on('popupclose', onPopupClose);
     if (onClick) marker.on('click', onClick);
 
-    map.addLayer(marker);
+    this.getMap().element.addLayer(marker);
     this.setMarker(marker);
   }
 
   destroy() {
-    const { map } = this.context;
-    map.removeLayer(this.marker);
+    this.getMap().element.removeLayer(this.marker);
     this.marker.off();
     this.setMarker(null);
   }

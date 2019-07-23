@@ -5,7 +5,7 @@ import MapContext from '../map/context';
 class MapComponent extends PureComponent {
   componentDidMount() {
     this.create();
-    this.context.addElement(this);
+    this.getMap().addElement(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -14,15 +14,16 @@ class MapComponent extends PureComponent {
 
   componentWillUnmount() {
     this.destroy();
-    this.context.removeElement(this);
+    this.getMap().removeElement(this);
   }
 
   // Override if element can provide bounds
   getBounds() { return null; }
+  getMap() { return this.context; }
 
   // Mandatory
-  // create(props, context) {}
-  // update(nextProps, nextContext) {}
+  // create() {}
+  // update(prevProps) {}
   // destroy() {}
 }
 

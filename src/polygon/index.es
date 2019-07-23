@@ -28,22 +28,19 @@ class Polygon extends MapComponent {
   create() {
     const { polygon: createPolygon } = require('leaflet');
     const { area, onClick } = this.props;
-    const { map } = this.context;
-    console.warn('MAP', map)
+
     const options = getOptions(this.props);
     const polygon = createPolygon(area.map(reverse), options);
 
     if (onClick) polygon.on('click', onClick);
 
-    map.addLayer(polygon);
+    this.getMap().element.addLayer(polygon);
     this.polygon = polygon;
   }
 
   destroy() {
-    const { map } = this.context;
-
     this.polygon.off();
-    map.removeLayer(this.polygon);
+    this.getMap().element.removeLayer(this.polygon);
     this.polygon = null;
   }
 

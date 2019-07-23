@@ -19,18 +19,16 @@ class Circle extends MapComponent {
 
   create() {
     const { circle: createCircle } = require('leaflet');
-    const { map } = this.context;
     const { center } = this.props;
     const options = getOptions(this.props);
     const circle = createCircle(reverse(center), options);
 
-    map.addLayer(circle);
+    this.getMap().element.addLayer(circle);
     this.circle = circle;
   }
 
   destroy() {
-    const { map } = this.context;
-    map.removeLayer(this.circle);
+    this.getMap().element.removeLayer(this.circle);
     this.circle = null;
   }
 
