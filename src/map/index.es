@@ -6,6 +6,8 @@ import classNames from 'classnames';
 import { reverse } from '../utils';
 import { getMapOptions, getTileUrl, getTileOptions, isViewChanged } from './utils';
 
+import { Provider } from './context';
+
 
 class Map extends PureComponent {
   constructor(props) {
@@ -13,9 +15,10 @@ class Map extends PureComponent {
 
     this.elements = [];
     this.state = {
-      isReady: false,
+      isContextReady: false,
     };
 
+    this.mapContext = {};
     this.addElement = this.addElement.bind(this);
     this.removeElement = this.removeElement.bind(this);
   }
@@ -24,14 +27,9 @@ class Map extends PureComponent {
   componentDidUpdate(prevProps) { this.update(prevProps); }
   componentWillUnmount() { this.destroy(); }
 
-  getChildContext() {
-    return {
-      map: {
-        element: this.map,
-        addElement: this.addElement,
-        removeElement: this.removeElement,
-      },
-    };
+  getMapContext() {
+    const { map, addElement, removeElement } = this;
+    return { element: map, addElement, removeElement };
   }
 
   getElementsBounds() {
@@ -43,7 +41,8 @@ class Map extends PureComponent {
 
   setMap(map) {
     this.map = map;
-    this.setState({ isReady: Boolean(map) });
+    this.mapContext = this.getMapContext();
+    this.setState({ isContextReady: Boolean(map) });
   }
 
   addElement(Component) {
@@ -130,18 +129,22 @@ class Map extends PureComponent {
     const ref = (el) => { this.node = el; };
 
     // Render children only when map is ready
-    let children;
-    if (this.state.isReady) children = this.props.children;
+    let content;
+    if (this.state.isContextReady) {
+      content = (
+        <Provider value={this.mapContext}>
+          {this.props.children}
+        </Provider>
+      );
+    }
 
-    return <article {...cleanProps} {...{ className, ref }}>{children}</article>;
+    return (
+      <article {...cleanProps} {...{ className, ref }}>
+        {content}
+      </article>
+    );
   }
 }
-
-Map.childContextTypes = {
-  map: PropTypes.object,
-};
-
-Map.contextTypes = null;
 
 Map.defaultProps = {
   animate: false,

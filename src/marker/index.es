@@ -1,65 +1,63 @@
 /* eslint react/no-unused-prop-types: "off" */
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import { reverse } from '../utils';
 import { getIcon } from './utils';
 
 import MapComponent from '../base';
+import { Provider } from './context';
 
 
 class Marker extends MapComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isReady: false,
+      isContextReady: false,
     };
   }
 
   setMarker(marker) {
     this.marker = marker;
-    this.setState({ isReady: Boolean(marker) });
+    this.setState({ isContextReady: Boolean(marker) });
   }
 
-  getChildContext() {
-    return { marker: this.marker };
-  }
-
-  updateListener(props, nextProps, listener, prop) {
-    if (props[prop] === nextProps[prop]) return;
+  updateListener(prevProps, listener, prop) {
+    if (this.props[prop] === prevProps[prop]) return;
     this.marker.off(listener);
-    this.marker.on(listener, nextProps[prop]);
+    this.marker.on(listener, this.props[prop]);
   }
 
-  update(nextProps, nextContext) {
-    if (nextProps.options !== this.props.options) {
+  update(prevProps) {
+    if (prevProps.options !== this.props.options) {
       this.destroy();
-      this.create(nextProps, nextContext);
+      this.create();
       return;
     }
 
     const { marker } = this;
-    const { position, divIcon, icon: defaultIcon, tooltip } = nextProps;
+    const { position, divIcon, icon: defaultIcon, tooltip } = this.props;
 
-    if (position !== this.props.position) {
+    if (position !== prevProps.position) {
       marker.setLatLng(reverse(position));
     }
 
-    if (divIcon !== this.props.divIcon || defaultIcon !== this.props.icon) {
+    if (divIcon !== prevProps.divIcon || defaultIcon !== prevProps.icon) {
       const icon = getIcon(this.leaflet, divIcon, defaultIcon);
       marker.setIcon(icon);
     }
 
-    if (this.props.tooltip !== tooltip) {
+    if (prevProps.tooltip !== tooltip) {
       marker.unbindTooltip();
       marker.bindTooltip(tooltip);
     }
 
-    this.updateListener(this.props, nextProps, 'click', 'onClick');
-    this.updateListener(this.props, nextProps, 'popupopen', 'onPopupOpen');
-    this.updateListener(this.props, nextProps, 'popupclose', 'onPopupClose');
+    this.updateListener(prevProps, 'click', 'onClick');
+    this.updateListener(prevProps, 'popupopen', 'onPopupOpen');
+    this.updateListener(prevProps, 'popupclose', 'onPopupClose');
   }
 
-  create(props, context) {
+  create() {
     this.leaflet = require('leaflet');
     const { marker: createMarker } = this.leaflet;
     const {
@@ -71,7 +69,7 @@ class Marker extends MapComponent {
       onClick,
       onPopupOpen,
       onPopupClose,
-    } = props;
+    } = this.props;
 
     const icon = getIcon(this.leaflet, divIcon, defaultIcon);
     const interactive = Boolean(onClick);
@@ -82,29 +80,21 @@ class Marker extends MapComponent {
     if (onPopupClose) marker.on('popupclose', onPopupClose);
     if (onClick) marker.on('click', onClick);
 
-    context.map.element.addLayer(marker);
+    this.getMap().element.addLayer(marker);
     this.setMarker(marker);
   }
 
   destroy() {
-    this.context.map.element.removeLayer(this.marker);
+    this.getMap().element.removeLayer(this.marker);
     this.marker.off();
     this.setMarker(null);
   }
 
   render() {
-    if (this.state.isReady) return this.props.children;
-    return null;
+    if (!this.state.isContextReady) return null;
+    return <Provider value={this.marker}>{this.props.children}</Provider>;
   }
 }
-
-Marker.childContextTypes = {
-  marker: PropTypes.object,
-};
-
-Marker.defaultProps = {
-  children: null,
-};
 
 Marker.propTypes = {
   children: PropTypes.node,

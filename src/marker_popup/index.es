@@ -1,39 +1,35 @@
 /* eslint react/no-unused-prop-types: "off" */
 import PropTypes from 'prop-types';
 import MapComponent from '../base';
+import withMarker from '../marker/with_marker';
 
 
 class MarkerPopup extends MapComponent {
-  update(nextProps, nextContext) {
+  update() {
     this.destroy();
-    this.create(nextProps, nextContext);
+    this.create();
   }
 
-  create(props, context) {
+  create() {
     const { popup: createPopup } = require('leaflet');
-    const { content, className, options: baseOptions, defaultOpen } = props;
+    const { content, className, options: baseOptions, defaultOpen, marker } = this.props;
     const options = { ...baseOptions, className };
 
     const popup = createPopup(options);
     popup.setContent(content);
-    context.marker.bindPopup(popup);
-    if (defaultOpen) context.marker.openPopup();
+    marker.bindPopup(popup);
+    if (defaultOpen) marker.openPopup();
 
     this.popup = popup;
   }
 
   destroy() {
-    this.context.marker.unbindPopup();
+    this.props.marker.unbindPopup();
     this.popup = null;
   }
 
   render() { return null; }
 }
-
-MarkerPopup.contextTypes = {
-  ...MapComponent.contextTypes,
-  marker: PropTypes.object,
-};
 
 MarkerPopup.defaultProps = {
   defaultOpen: false,
@@ -44,6 +40,8 @@ MarkerPopup.propTypes = {
   content: PropTypes.string,
   options: PropTypes.object,
   defaultOpen: PropTypes.bool.isRequired,
+
+  marker: PropTypes.object.isRequired,
 };
 
-export default MarkerPopup;
+export default withMarker(MarkerPopup);

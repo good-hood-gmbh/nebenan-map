@@ -156,6 +156,7 @@ class MapPreview extends PureComponent {
             onPopupClose={this.handleAction}
           >
             <MarkerPopup
+              defaultOpen
               content="Lorem lorem"
               options={{
                 offset: [0, -40],

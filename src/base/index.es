@@ -1,33 +1,32 @@
 import { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import MapContext from '../map/context';
 
 
 class MapComponent extends PureComponent {
   componentDidMount() {
-    this.create(this.props, this.context);
-    this.context.map.addElement(this);
+    this.create();
+    this.getMap().addElement(this);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.update(nextProps, nextContext);
+  componentDidUpdate(prevProps) {
+    this.update(prevProps);
   }
 
   componentWillUnmount() {
     this.destroy();
-    this.context.map.removeElement(this);
+    this.getMap().removeElement(this);
   }
 
   // Override if element can provide bounds
   getBounds() { return null; }
+  getMap() { return this.context; }
 
   // Mandatory
-  // create(props, context) {}
-  // update(nextProps, nextContext) {}
+  // create() {}
+  // update(prevProps) {}
   // destroy() {}
 }
 
-MapComponent.contextTypes = {
-  map: PropTypes.object,
-};
+MapComponent.contextType = MapContext;
 
 export default MapComponent;
