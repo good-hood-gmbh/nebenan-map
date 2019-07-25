@@ -18,7 +18,7 @@ class Map extends PureComponent {
       isContextReady: false,
     };
 
-    this.staticContext = this.getDefaultContext();
+    this.mapContext = {};
     this.addElement = this.addElement.bind(this);
     this.removeElement = this.removeElement.bind(this);
   }
@@ -27,7 +27,7 @@ class Map extends PureComponent {
   componentDidUpdate(prevProps) { this.update(prevProps); }
   componentWillUnmount() { this.destroy(); }
 
-  getDefaultContext() {
+  getMapContext() {
     const { map, addElement, removeElement } = this;
     return { element: map, addElement, removeElement };
   }
@@ -41,7 +41,7 @@ class Map extends PureComponent {
 
   setMap(map) {
     this.map = map;
-    this.staticContext = this.getDefaultContext();
+    this.mapContext = this.getMapContext();
     this.setState({ isContextReady: Boolean(map) });
   }
 
@@ -129,13 +129,18 @@ class Map extends PureComponent {
     const ref = (el) => { this.node = el; };
 
     // Render children only when map is ready
-    const children = this.state.isContextReady ? this.props.children : null;
+    let content;
+    if (this.state.isContextReady) {
+      content = (
+        <Provider value={this.mapContext}>
+          {this.props.children}
+        </Provider>
+      );
+    }
 
     return (
       <article {...cleanProps} {...{ className, ref }}>
-        <Provider value={this.staticContext}>
-          {children}
-        </Provider>
+        {content}
       </article>
     );
   }

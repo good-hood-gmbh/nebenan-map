@@ -13,18 +13,13 @@ class Marker extends MapComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isReady: false,
+      isContextReady: false,
     };
   }
 
   setMarker(marker) {
     this.marker = marker;
-    this.staticContext = this.getDefaultContext();
-    this.setState({ isReady: Boolean(marker) });
-  }
-
-  getDefaultContext() {
-    return this.marker;
+    this.setState({ isContextReady: Boolean(marker) });
   }
 
   updateListener(prevProps, listener, prop) {
@@ -96,10 +91,8 @@ class Marker extends MapComponent {
   }
 
   render() {
-    let content;
-    if (this.state.isReady) content = this.props.children;
-
-    return <Provider value={this.staticContext}>{content}</Provider>;
+    if (!this.state.isContextReady) return null;
+    return <Provider value={this.marker}>{this.props.children}</Provider>;
   }
 }
 
