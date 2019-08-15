@@ -70,6 +70,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "serve-static": "^1.14.1",
     "string-validate": "^3.0.2",
     "stylint": "^1.5.9",

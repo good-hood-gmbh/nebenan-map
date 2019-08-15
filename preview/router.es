@@ -9,6 +9,6 @@ export default () => (
   <Switch>
     <Route path="/" component={Index} exact />
     <Route path="/map" component={Map} />
-    <Route path="*" component={Error404} />
+    <Route component={Error404} />
   </Switch>
 );
