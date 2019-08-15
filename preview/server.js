@@ -7,7 +7,7 @@ const React = require('react');
 const { renderToString } = require('react-dom/server');
 
 const { StaticRouter } = require('react-router');
-const createRouter = require('./router');
+const AppRoutes = require('./router');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 
@@ -33,7 +33,7 @@ const getHTML = (content) => (`<!DOCTYPE html>
 
 const renderApp = (req, res) => {
   const context = {};
-  const routes = createRouter();
+  const routes = React.createElement(AppRoutes);
   const Component = React.createElement(StaticRouter, { context, location: req.url }, routes);
   const content = renderToString(Component);
 

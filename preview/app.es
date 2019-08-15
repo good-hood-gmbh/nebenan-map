@@ -3,12 +3,11 @@ import { hydrate } from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import createRouter from './router';
+import AppRoutes from './router';
 
-const routes = createRouter();
 const Component = (
   <BrowserRouter>
-    {routes}
+    <AppRoutes />
   </BrowserRouter>
 );
 hydrate(Component, document.getElementById('main'));
