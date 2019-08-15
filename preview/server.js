@@ -1,68 +1,56 @@
 require('@babel/register')({ extensions: ['.es'] });
 const app = require('express')();
+const serveStatic = require('serve-static');
+const morgan = require('morgan');
 
 const React = require('react');
 const { renderToString } = require('react-dom/server');
 
-const match = require('react-router/lib/match');
-const RouterContext = require('react-router/lib/RouterContext');
+const { StaticRouter } = require('react-router');
 const createRouter = require('./router');
-const Error404 = require('./containers/error404');
+const MicroHelmet = require('../lib/micro_helmet');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 
-const getHTML = (content) => (`<!DOCTYPE html>
+const getHTML = (meta, content) => (`<!DOCTYPE html>
 <html lang="en-US">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Nebenan.de React form components</title>
+    <title>${meta && meta.title ? meta.title : 'React Nebenan UI Components'}</title>
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no" />
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="cleartype" content="on" />
-    <link rel="stylesheet", href="/assets/style.css" />
+    <link rel="stylesheet", href="/style.css" />
   </head>
   <body>
     <main id="main">${content}</main>
-    <script src="/assets/script.js" async></script>
+    <script src="/script.js" async></script>
   </body>
 </html>
 `);
 
-const renderApp = (req, res, next) => {
-  const renderPage = (props) => {
-    const statusCode = props.components.includes(Error404) ? 404 : 200;
-
-    const Component = React.createElement(RouterContext, props);
-    const content = renderToString(Component);
-
-    res.status(statusCode).send(getHTML(content));
-  };
-
-  const matchPage = (error, redirect, props) => {
-    if (error) {
-      console.log(`Request ${req.url} failed to route:`, error.message);
-      return next();
-    }
-
-    if (redirect) return res.redirect(302, `${redirect.pathname}${redirect.search}`);
-
-    // if there was no props, this request isn't handled by FE explicitly
-    if (!props) return next();
-
-    renderPage(props);
-  };
-
+const renderApp = (req, res) => {
+  const context = {};
   const routes = createRouter();
-  match({ routes, location: req.url }, matchPage);
+  const Component = React.createElement(StaticRouter, { context, location: req.url }, routes);
+  const content = renderToString(Component);
+
+  if (context.url) return res.redirect(302, context.url);
+
+  const meta = MicroHelmet.rewind();
+
+  res.send(getHTML(meta, content));
 };
 
 app.set('port', port);
 
-app.use(require('morgan')('dev'));
-app.use(require('serve-static')(`${__dirname}/public`, { redirect: false }));
+const emojis = serveStatic(`${__dirname}/../node_modules/emojione-assets/png/`, { redirect: false });
+app.use(morgan('dev'));
+app.use(serveStatic(`${__dirname}/public`, { redirect: false }));
+app.use('/images/emojis-v4.0.0', emojis);
 
 app.use(renderApp);
 app.get('*', (req, res) => res.send('Unhandled request'));

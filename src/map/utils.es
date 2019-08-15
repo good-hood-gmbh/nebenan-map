@@ -42,7 +42,7 @@ export const getTileOptions = (credentials) => {
     <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,
     Imagery © <a href="http://mapbox.com">Mapbox</a>`;
 
-  return Object.assign({ attribution }, credentials);
+  return { attribution, ...credentials };
 };
 
 export const isViewChanged = (props, nextProps) => viewProps.some((prop) => (
