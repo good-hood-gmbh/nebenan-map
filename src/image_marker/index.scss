@@ -1,0 +1,21 @@
+.c-image_marker-container {
+  @include block-round(35px);
+  @include block-center;
+
+  z-index: 1;
+
+  @include background-fill;
+
+  border: $border-light;
+  border-width: 2px;
+  box-shadow: $shadow-bottom-default;
+}
+
+.c-image_marker-caption {
+  padding: 5px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
