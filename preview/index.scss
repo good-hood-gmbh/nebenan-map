@@ -1,5 +1,5 @@
 @import 'nebenan-ui-kit/styles';
-@import 'nebenan-form/src/*';
+@import 'nebenan-form/src/**/*.scss';
 @import '../src/**/*.scss';
 @import './components/**/*.scss';
 @import './containers/**/*.scss';
@@ -26,5 +26,5 @@ main {
   height: 1em;
   content: '';
   display: inline-block;
-  background: red; /* stylelint-disable-line color-named */
+  background: $color-red-00;
 }

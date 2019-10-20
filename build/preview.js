@@ -3,7 +3,7 @@ const sass = require('sass');
 const gulpSass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 
-const ASSETS_FOLDER = `${__dirname}/../preview/public/assets`;
+const PUBLIC_FOLDER = `${__dirname}/../preview/public`;
 
 const SCRIPT_SOURCE = `${__dirname}/../preview/app.es`;
 const SCRIPT_FILE = 'script.js';
@@ -37,7 +37,7 @@ const cacheOptions = {
   cacheFile: `${__dirname}/.browserify-cache.json`,
 };
 
-gulp.task('preview:clean', () => require('del')([ASSETS_FOLDER]));
+gulp.task('preview:clean', () => require('del')([PUBLIC_FOLDER]));
 
 gulp.task('preview:babel', () => {
   const bundler = require('browserify')(browserifyOptions);
@@ -48,7 +48,7 @@ gulp.task('preview:babel', () => {
   return watcher
     .bundle()
     .pipe(require('vinyl-source-stream')(SCRIPT_FILE))
-    .pipe(gulp.dest(ASSETS_FOLDER));
+    .pipe(gulp.dest(PUBLIC_FOLDER));
 });
 
 gulp.task('preview:styles', () => (
@@ -61,7 +61,7 @@ gulp.task('preview:styles', () => (
     ]))
     .pipe(require('gulp-rename')(STYLE_FILE))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(ASSETS_FOLDER))
+    .pipe(gulp.dest(PUBLIC_FOLDER))
 ));
 
 gulp.task('preview', gulp.series(
