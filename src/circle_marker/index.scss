@@ -10,7 +10,7 @@
 
   border-radius: 50%;
   border: 3px dotted $color-gray-02;
-  background: alpha($color-green-02);
+  background: rgba($color-green-02, .8);
 
   @media ($media-m) {
     width: 220px;
