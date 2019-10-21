@@ -3,7 +3,7 @@ const sass = require('sass');
 const gulpSass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 
-const PUBLIC_FOLDER = `${__dirname}/../preview/public`;
+const PUBLIC_FOLDER = `${__dirname}/../preview/public/assets`;
 
 const SCRIPT_SOURCE = `${__dirname}/../preview/app.es`;
 const SCRIPT_FILE = 'script.js';
