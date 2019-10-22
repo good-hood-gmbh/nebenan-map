@@ -26,7 +26,7 @@ const getHTML = (content) => (`<!DOCTYPE html>
   </head>
   <body>
     <main id="main">${content}</main>
-    <script src="/script.js" async></script>
+    <script src="/assets/script.js" async></script>
   </body>
 </html>
 `);
