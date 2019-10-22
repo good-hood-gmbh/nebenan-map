@@ -1,9 +1,8 @@
 .c-info_marker {
   .icon-i {
+    @include block-center;
     width: 32px;
     height: 32px;
-
-    @include block-center;
 
     font-size: 17px;
     text-align: center;
