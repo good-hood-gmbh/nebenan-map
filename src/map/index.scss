@@ -1,0 +1,22 @@
+.c-map {
+  @include block-responsive(75%);
+  position: relative;
+
+  // overrides default leaflet font
+  font-family: $font-family;
+
+  .leaflet-marker-icon {
+    // fixes weird chrome outline
+    outline: none;
+  }
+
+  .leaflet-bottom,
+  .leaflet-top,
+  .leaflet-pane {
+    z-index: 1;
+  }
+
+  .leaflet-control-attribution {
+    font-size: 9px;
+  }
+}
