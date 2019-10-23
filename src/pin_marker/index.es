@@ -18,7 +18,7 @@ const PinMarker = (props) => {
   const { type, ...cleanProps } = props;
 
   const icon = {
-    iconUrl: `/images/map/pin_${type}.svg`,
+    iconUrl: `/images/map/pin-${type}.svg`,
     iconSize: [45, 45],
     iconAnchor: [22, 45],
 
@@ -33,7 +33,7 @@ const PinMarker = (props) => {
 };
 
 PinMarker.defaultProps = {
-  type: PIN_MARKER_BASE,
+  type: PIN_MARKER_GRAY,
 };
 
 PinMarker.propTypes = {

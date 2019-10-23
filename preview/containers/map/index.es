@@ -80,7 +80,7 @@ class MapPreview extends PureComponent {
       polygonType: POLYGON_ACTIVE,
       polygonInteractive: true,
 
-      pinMarkerType: PIN_MARKER_BASE,
+      pinMarkerType: PIN_MARKER_GREEN,
       markerContent: 'Wuba Duba Lub Lub',
 
       circleType: CIRCLE_ACTIVE,
