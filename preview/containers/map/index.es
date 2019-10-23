@@ -15,8 +15,13 @@ import {
   POLYGON_DEFAULT,
 } from '../../../lib/polygon/constants';
 import {
-  PIN_MARKER_SECONDARY,
-  PIN_MARKER_PRIMARY,
+  PIN_MARKER_GREEN,
+  PIN_MARKER_BASE,
+  PIN_MARKER_ORANGE,
+  PIN_MARKER_YELLOW,
+  PIN_MARKER_RED,
+  PIN_MARKER_GRAY,
+  PIN_MARKER_BLUE,
 } from '../../../lib/pin_marker/constants';
 import {
   CIRCLE_ACTIVE,
@@ -51,8 +56,13 @@ const circleTypes = [
 ];
 
 const pinMarkerTypes = [
-  PIN_MARKER_SECONDARY,
-  PIN_MARKER_PRIMARY,
+  PIN_MARKER_GREEN,
+  PIN_MARKER_BASE,
+  PIN_MARKER_ORANGE,
+  PIN_MARKER_YELLOW,
+  PIN_MARKER_RED,
+  PIN_MARKER_GRAY,
+  PIN_MARKER_BLUE,
 ];
 
 
@@ -70,7 +80,7 @@ class MapPreview extends PureComponent {
       polygonType: POLYGON_ACTIVE,
       polygonInteractive: true,
 
-      pinMarkerType: PIN_MARKER_SECONDARY,
+      pinMarkerType: PIN_MARKER_BASE,
       markerContent: 'Wuba Duba Lub Lub',
 
       circleType: CIRCLE_ACTIVE,

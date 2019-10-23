@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  PIN_MARKER_PRIMARY,
-  PIN_MARKER_SECONDARY,
+  PIN_MARKER_GREEN,
+  PIN_MARKER_BASE,
+  PIN_MARKER_ORANGE,
+  PIN_MARKER_YELLOW,
+  PIN_MARKER_RED,
+  PIN_MARKER_GRAY,
+  PIN_MARKER_BLUE,
 } from './constants';
 
 import Marker from '../marker';
@@ -13,7 +18,7 @@ const PinMarker = (props) => {
   const { type, ...cleanProps } = props;
 
   const icon = {
-    iconUrl: `/images/map/pin_${type}.png`,
+    iconUrl: `/images/map/pin_${type}.svg`,
     iconSize: [45, 45],
     iconAnchor: [22, 45],
 
@@ -28,13 +33,18 @@ const PinMarker = (props) => {
 };
 
 PinMarker.defaultProps = {
-  type: PIN_MARKER_SECONDARY,
+  type: PIN_MARKER_BASE,
 };
 
 PinMarker.propTypes = {
   type: PropTypes.oneOf([
-    PIN_MARKER_PRIMARY,
-    PIN_MARKER_SECONDARY,
+    PIN_MARKER_GREEN,
+    PIN_MARKER_BASE,
+    PIN_MARKER_ORANGE,
+    PIN_MARKER_YELLOW,
+    PIN_MARKER_RED,
+    PIN_MARKER_GRAY,
+    PIN_MARKER_BLUE,
   ]),
 };
 
