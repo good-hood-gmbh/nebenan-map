@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Marker from '../marker';
 
 
 const InfoMarker = (props) => {
   const { small, className, ...cleanProps } = props;
-  const iconClass = classNames('c-info_marker', className, { 'is-small': small });
+  const iconClass = clsx('c-info_marker', className, { 'is-small': small });
 
   const icon = {
     className: iconClass,
