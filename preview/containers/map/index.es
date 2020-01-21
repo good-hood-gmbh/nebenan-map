@@ -207,7 +207,8 @@ class MapPreview extends PureComponent {
             caption="Caption"
           />
           <InfoMarker position={content.markers[1]} />
-          <LabelMarker position={content.markers[2]} content="LoLoL" />
+          <InfoMarker position={content.markers[2]} small />
+          <LabelMarker position={content.markers[3]} content="LoLoL" />
         </Map>
       </div>
     );

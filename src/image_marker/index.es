@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Marker from '../marker';
 
 
 const ImageMarker = (props) => {
   const { image, caption, className, ...cleanProps } = props;
-  const iconClass = classNames('c-image_marker', className);
+  const iconClass = clsx('c-image_marker', className);
 
   let html = `<span class="c-image_marker-container" style='background-image: url(${image})'></span>`;
   if (caption) html += `<span class="c-image_marker-caption ui-card">${caption}</span>`;

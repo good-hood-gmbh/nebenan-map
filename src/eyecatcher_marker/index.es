@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Marker from '../marker';
 
 
 const EyecatcherMarker = (props) => {
   const { content, className, ...cleanProps } = props;
-  const iconClass = classNames('c-eyecatcher_marker', className);
+  const iconClass = clsx('c-eyecatcher_marker', className);
 
   const html = (
     `<div class="c-eyecatcher_marker-container">

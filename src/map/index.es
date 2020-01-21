@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 import { reverse } from '../utils';
 import { getMapOptions, getTileUrl, getTileOptions, isViewChanged } from './utils';
@@ -112,7 +112,7 @@ class Map extends PureComponent {
   }
 
   render() {
-    const className = classNames('c-map', this.props.className);
+    const className = clsx('c-map', this.props.className);
     const cleanProps = omit(this.props,
       'children',
       'animate',
