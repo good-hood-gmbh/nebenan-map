@@ -28,17 +28,16 @@ export const getMapOptions = (node, { noAttribution, locked, lockedMobile }) => 
 };
 
 export const getTileUrl = (credentials) => (
-  credentials ?
-    'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}' :
-    'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+  credentials
+    ? 'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}'
+    : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 );
 
 export const getTileOptions = (credentials) => {
   const osm = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
   if (!credentials) return { attribution: osm };
 
-  const attribution =
-    `Map data ${osm},
+  const attribution = `Map data ${osm},
     <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,
     Imagery © <a href="http://mapbox.com">Mapbox</a>`;
 
