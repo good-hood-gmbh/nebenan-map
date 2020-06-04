@@ -27,11 +27,14 @@ export const getMapOptions = (node, { noAttribution, locked, lockedMobile }) => 
   return { ...base, scrollWheelZoom: false, attributionControl: !noAttribution };
 };
 
-export const getTileUrl = (credentials) => (
-  credentials
-    ? 'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}'
-    : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-);
+// export const getTileUrl = (credentials) => (
+//   credentials
+//     ? 'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}'
+//     : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+// );
+
+export const getTileUrl = () => 'https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=h5gjGa1Ak2h0KgddSpXq';
+
 
 export const getTileOptions = (credentials) => {
   const osm = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
