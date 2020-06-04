@@ -29,8 +29,8 @@ export const getMapOptions = (node, { noAttribution, locked, lockedMobile }) => 
 
 export const getTileUrl = (credentials) => (
   credentials
-    ? 'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}'
-    : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+    ? 'https://api.maptiler.com/maps/voyager/{z}/{x}/{y}.png?key=h5gjGa1Ak2h0KgddSpXq'
+    : 'https://api.maptiler.com/maps/voyager/{z}/{x}/{y}.png?key=h5gjGa1Ak2h0KgddSpXq'
 );
 
 export const getTileOptions = (credentials) => {
