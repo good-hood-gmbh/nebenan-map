@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import clsx from 'clsx';
 
 import { reverse } from '../utils';
-import { getMapOptions, getTileUrl, getTileOptions, isViewChanged } from './utils';
+import { getMapOptions, getMapboxGLOptions, isViewChanged } from './utils';
 
 import { Provider } from './context';
 
@@ -82,19 +82,14 @@ class Map extends PureComponent {
   create(props) {
     const leaflet = require('leaflet');
     require('mapbox-gl-leaflet');
-    const { map: createMap, tileLayer: createTile, mapboxGL } = leaflet;
+    const { map: createMap, mapboxGL: createMapboxGL } = leaflet;
 
     const options = getMapOptions(global, props);
     const map = createMap(this.node, options);
 
-    mapboxGL({
-      accessToken: 'not-needed',
-      style: 'https://api.maptiler.com/maps/streets/style.json?key=h5gjGa1Ak2h0KgddSpXq'
-    }).addTo(map);
-
-    // const tile = createTile(getTileUrl(props.credentials), getTileOptions(props.credentials));
-    // map.addLayer(tile);
-    // this.tile = tile;
+    const mapboxGL = createMapboxGL(getMapboxGLOptions(props.credentials));
+    map.addLayer(mapboxGL);
+    this.mapboxGL = mapboxGL;
 
     const { bounds, defaultView, defaultZoom, onLoad } = props;
 
@@ -104,14 +99,14 @@ class Map extends PureComponent {
       map.setView(reverse(defaultView), defaultZoom);
     }
 
-    // if (onLoad) tile.once('load', onLoad);
+    if (onLoad) mapboxGL.once('load', onLoad);
 
     this.setMap(map);
   }
 
   destroy() {
-    this.tile.off();
-    this.tile = null;
+    this.mapboxGL.off();
+    this.mapboxGL = null;
 
     this.map.stop();
     this.map.remove();
