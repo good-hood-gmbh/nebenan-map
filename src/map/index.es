@@ -80,14 +80,21 @@ class Map extends PureComponent {
   }
 
   create(props) {
-    const { map: createMap, tileLayer: createTile } = require('leaflet');
+    const leaflet = require('leaflet');
+    require('mapbox-gl-leaflet');
+    const { map: createMap, tileLayer: createTile, mapboxGL } = leaflet;
 
     const options = getMapOptions(global, props);
     const map = createMap(this.node, options);
 
-    const tile = createTile(getTileUrl(props.credentials), getTileOptions(props.credentials));
-    map.addLayer(tile);
-    this.tile = tile;
+    mapboxGL({
+      accessToken: 'not-needed',
+      style: 'https://api.maptiler.com/maps/streets/style.json?key=h5gjGa1Ak2h0KgddSpXq'
+    }).addTo(map);
+
+    // const tile = createTile(getTileUrl(props.credentials), getTileOptions(props.credentials));
+    // map.addLayer(tile);
+    // this.tile = tile;
 
     const { bounds, defaultView, defaultZoom, onLoad } = props;
 
@@ -97,7 +104,7 @@ class Map extends PureComponent {
       map.setView(reverse(defaultView), defaultZoom);
     }
 
-    if (onLoad) tile.once('load', onLoad);
+    // if (onLoad) tile.once('load', onLoad);
 
     this.setMap(map);
   }

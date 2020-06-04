@@ -92,6 +92,8 @@
     "node-sass-glob-importer": "^5.3.2"
   },
   "dependencies": {
-    "leaflet": "^1.6.0"
+    "leaflet": "^1.6.0",
+    "mapbox-gl": "^1.10.1",
+    "mapbox-gl-leaflet": "0.0.12"
   }
 }
