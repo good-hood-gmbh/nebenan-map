@@ -66,6 +66,9 @@ const pinMarkerTypes = [
 ];
 
 
+// To enable maptiler pass key in credentials
+let maptilerCredentials;
+
 class MapPreview extends PureComponent {
   constructor(props) {
     super(props);
@@ -108,6 +111,7 @@ class MapPreview extends PureComponent {
     return (
       <div className="preview-section">
         <Map
+          credentials={maptilerCredentials}
           bounds={content.polygons[mapBoundsIndex]}
           locked={mapLocked}
           lockedMobile={mapLockedMobile}
@@ -136,7 +140,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <Map bounds={content.polygons[0]}>
+        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
           <Polygon
             area={content.polygons[0]}
             type={polygonType}
@@ -158,7 +162,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <Map bounds={content.polygons[0]}>
+        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
           <PinMarker
             position={content.markers[0]}
             type={pinMarkerType}
@@ -186,7 +190,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <Map bounds={content.polygons[0]}>
+        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
           <CirleMarker position={content.markers[0]} content={markerContent} />
           <EyecatherMarker position={content.markers[1]} content={markerContent} />
         </Map>
@@ -200,7 +204,7 @@ class MapPreview extends PureComponent {
   renderMisc() {
     return (
       <div className="preview-section">
-        <Map bounds={content.polygons[0]}>
+        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
           <ImageMarker
             position={content.markers[0]}
             image={content.profileImage}
@@ -221,7 +225,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <Map bounds={content.polygons[0]}>
+        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
           <Circle
             center={content.markers[0]}
             radius={2000}

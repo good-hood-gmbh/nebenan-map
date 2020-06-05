@@ -29,19 +29,19 @@ export const getMapOptions = (node, { noAttribution, locked, lockedMobile }) => 
 
 export const getTileUrl = (credentials) => (
   credentials
-    ? 'https://api.maptiler.com/maps/voyager/{z}/{x}/{y}.png?key=h5gjGa1Ak2h0KgddSpXq'
-    : 'https://api.maptiler.com/maps/voyager/{z}/{x}/{y}.png?key=h5gjGa1Ak2h0KgddSpXq'
+    ? `https://api.maptiler.com/maps/voyager/256/{z}/{x}/{y}.png?key=${credentials.key}`
+    : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 );
 
 export const getTileOptions = (credentials) => {
-  const osm = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+  const osm = '<a href="http://osm.org/copyright" target="_blank" rel="noopener noreferrer">&copy; OpenStreetMap contributors</a>';
   if (!credentials) return { attribution: osm };
 
-  const attribution = `Map data ${osm},
-    <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,
-    Imagery © <a href="http://mapbox.com">Mapbox</a>`;
+  const attribution = `
+    <a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener noreferrer">&copy; MapTiler</a> ${osm}
+  `;
 
-  return { attribution, ...credentials };
+  return { attribution };
 };
 
 export const isViewChanged = (props, nextProps) => viewProps.some((prop) => (
