@@ -29,7 +29,7 @@ export const getMapOptions = (node, { noAttribution, locked, lockedMobile }) => 
 
 export const getTileUrl = (credentials) => (
   credentials
-    ? `https://api.maptiler.com/maps/voyager/256/{z}/{x}/{y}.png?key=${credentials.key}`
+    ? `https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=${credentials.key}`
     : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 );
 
