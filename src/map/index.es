@@ -1,150 +1,42 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
+import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 import clsx from 'clsx';
 
-import { reverse } from '../utils';
-import { getMapOptions, getTileUrl, getTileOptions, isViewChanged } from './utils';
 
-import { Provider } from './context';
+const Map = (props) => {
+  const {
+    className: passedClassName,
+    children,
 
+    credentials,
 
-class Map extends PureComponent {
-  constructor(props) {
-    super(props);
+    animate,
+    locked,
+    lockedMobile,
+    noAttribution,
 
-    this.elements = [];
-    this.state = {
-      isContextReady: false,
-    };
+    bounds,
+    defaultView,
+    defaultZoom,
 
-    this.mapContext = {};
-    this.addElement = this.addElement.bind(this);
-    this.removeElement = this.removeElement.bind(this);
-  }
+    onLoad,
+    ...rest
+  } = props;
 
-  componentDidMount() { this.create(this.props); }
-  componentDidUpdate(prevProps) { this.update(prevProps); }
-  componentWillUnmount() { this.destroy(); }
+  const MapboxMap = ReactMapboxGl({
+    apiUrl: null,
+    interactive: !locked && !lockedMobile,
+    attributionControl: !noAttribution,
+  });
 
-  getMapContext() {
-    const { map, addElement, removeElement } = this;
-    return { element: map, addElement, removeElement };
-  }
-
-  getElementsBounds() {
-    return this.elements.reduce((acc, element) => {
-      const bounds = element.getBounds();
-      return bounds ? acc.concat(bounds) : acc;
-    }, []);
-  }
-
-  setMap(map) {
-    this.map = map;
-    this.mapContext = this.getMapContext();
-    this.setState({ isContextReady: Boolean(map) });
-  }
-
-  addElement(Component) {
-    if (!this.elements.includes(Component)) this.elements.push(Component);
-  }
-
-  removeElement(Component) {
-    this.elements = this.elements.filter((item) => item !== Component);
-  }
-
-  update(prevProps) {
-    if (isViewChanged(prevProps, this.props)) {
-      this.destroy();
-      this.create(this.props);
-      return;
-    }
-
-    const { bounds, animate } = this.props;
-    const { map } = this;
-
-    let fitBounds;
-    if (bounds && prevProps.bounds !== bounds) {
-      fitBounds = bounds.map(reverse);
-    } else {
-      fitBounds = this.getElementsBounds();
-    }
-
-    if (!fitBounds || !fitBounds.length) return;
-
-    if (animate) {
-      map.flyToBounds(fitBounds);
-    } else {
-      map.fitBounds(fitBounds);
-    }
-  }
-
-  create(props) {
-    const { map: createMap, tileLayer: createTile } = require('leaflet');
-
-    const options = getMapOptions(global, props);
-    const map = createMap(this.node, options);
-
-    const tile = createTile(getTileUrl(props.credentials), getTileOptions(props.credentials));
-    map.addLayer(tile);
-    this.tile = tile;
-
-    const { bounds, defaultView, defaultZoom, onLoad } = props;
-
-    if (bounds) {
-      map.fitBounds(bounds.map(reverse));
-    } else if (defaultView) {
-      map.setView(reverse(defaultView), defaultZoom);
-    }
-
-    if (onLoad) tile.once('load', onLoad);
-
-    this.setMap(map);
-  }
-
-  destroy() {
-    this.tile.off();
-    this.tile = null;
-
-    this.map.stop();
-    this.map.remove();
-    this.setMap(null);
-  }
-
-  render() {
-    const className = clsx('c-map', this.props.className);
-    const cleanProps = omit(this.props,
-      'children',
-      'animate',
-      'locked',
-      'lockedMobile',
-      'noAttribution',
-      'bounds',
-      'credentials',
-      'defaultView',
-      'defaultZoom',
-      'onLoad',
-    );
-
-    const ref = (el) => { this.node = el; };
-
-    // Render children only when map is ready
-    let content;
-    if (this.state.isContextReady) {
-      content = (
-        <Provider value={this.mapContext}>
-          {this.props.children}
-        </Provider>
-      );
-    }
-
-    return (
-      <article {...cleanProps} {...{ className, ref }}>
-        {content}
-      </article>
-    );
-  }
-}
+  return (
+    <MapboxMap
+      {...rest}
+      style="https://api.maptiler.com/maps/streets/style.json?key=h5gjGa1Ak2h0KgddSpXq"
+    />
+  );
+};
 
 Map.defaultProps = {
   animate: false,
@@ -155,7 +47,9 @@ Map.defaultProps = {
 
 Map.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node,
+  children: PropTypes.any,
+
+  credentials: PropTypes.object,
 
   animate: PropTypes.bool.isRequired,
   locked: PropTypes.bool.isRequired,
@@ -165,9 +59,6 @@ Map.propTypes = {
   bounds: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.number),
   ),
-
-  credentials: PropTypes.object,
-
   defaultView: PropTypes.arrayOf(PropTypes.number),
   defaultZoom: PropTypes.number,
 
