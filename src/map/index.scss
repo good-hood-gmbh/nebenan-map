@@ -1,6 +1,5 @@
 .c-map {
   @include block-responsive(75%);
-  position: relative;
 
   // overrides default leaflet font
   font-family: $font-family;

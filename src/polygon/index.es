@@ -1,72 +1,43 @@
-/* eslint react/no-unused-prop-types: "off" */
+import React from 'react';
 import PropTypes from 'prop-types';
-
-import { reverse } from '../utils';
-import { getOptions } from './utils';
-import {
-  POLYGON_ACTIVE,
-  POLYGON_HIGHLIGHTED,
-  POLYGON_SOLID,
-  POLYGON_THIN,
-  POLYGON_DEFAULT,
-} from './constants';
-
-import MapComponent from '../base';
+import { Layer, Source } from 'react-mapbox-gl';
+import { getPaintOptions, getTypeProp } from './utils';
 
 
-class Polygon extends MapComponent {
-  update() {
-    this.destroy();
-    this.create();
-  }
+const Polygon = (props) => {
+  const {
+    type,
+    area,
+    ...rest
+  } = props;
 
-  getBounds() {
-    if (!this.polygon) return null;
-    return this.polygon.getBounds();
-  }
+  const geoJSON = {
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [area],
+      },
+    },
+  };
 
-  create() {
-    const { polygon: createPolygon } = require('leaflet');
-    const { area, onClick } = this.props;
-
-    const options = getOptions(this.props);
-    const polygon = createPolygon(area.map(reverse), options);
-
-    if (onClick) polygon.on('click', onClick);
-
-    this.getMap().element.addLayer(polygon);
-    this.polygon = polygon;
-  }
-
-  destroy() {
-    this.polygon.off();
-    this.getMap().element.removeLayer(this.polygon);
-    this.polygon = null;
-  }
-
-  render() { return null; }
-}
-
-Polygon.defaultProps = {
-  type: POLYGON_DEFAULT,
+  return (
+    <>
+      <Source geoJsonSource={geoJSON} id="polygon" />
+      <Layer
+        {...rest}
+        type="fill"
+        paint={getPaintOptions(type)}
+        sourceId="polygon"
+      />
+    </>
+  );
 };
 
 Polygon.propTypes = {
-  type: PropTypes.oneOf([
-    POLYGON_ACTIVE,
-    POLYGON_HIGHLIGHTED,
-    POLYGON_SOLID,
-    POLYGON_THIN,
-    POLYGON_DEFAULT,
-  ]).isRequired,
-
-  area: PropTypes.arrayOf(
-    PropTypes.arrayOf(PropTypes.number),
-  ).isRequired,
-
-  options: PropTypes.object,
-
-  onClick: PropTypes.func,
+  type: getTypeProp().isRequired,
+  area: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
 };
 
 export default Polygon;

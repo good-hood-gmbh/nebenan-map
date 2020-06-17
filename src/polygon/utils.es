@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import {
   COLOR_ACTION,
   COLOR_DARK70,
@@ -18,40 +20,47 @@ import {
   POLYGON_DEFAULT,
 } from './constants';
 
-const borderStyles = { weight: WEIGHT_L, dashArray: null, color: COLOR_DARK70 };
+
+const borderStyles = {
+  // 'line-width': WEIGHT_L,
+  // 'line-color': COLOR_DARK70,
+};
 
 const STYLES = {
   [POLYGON_ACTIVE]: {
     ...borderStyles,
-    fillColor: COLOR_ACTION,
-    fillOpacity: OPACITY_S,
+    'fill-color': COLOR_ACTION,
+    'fill-opacity': OPACITY_S,
   },
   [POLYGON_HIGHLIGHTED]: {
     ...borderStyles,
-    fillColor: COLOR_DARK70,
-    fillOpacity: OPACITY_M,
+    'fill-color': COLOR_DARK70,
+    'fill-opacity': OPACITY_M,
   },
   [POLYGON_SOLID]: {
     ...borderStyles,
-    fillColor: COLOR_DARK70,
-    fillOpacity: OPACITY_S,
+    'fill-color': COLOR_DARK70,
+    'fill-opacity': OPACITY_S,
   },
   [POLYGON_THIN]: {
     ...borderStyles,
-    fillColor: COLOR_DARK70,
-    fillOpacity: OPACITY_S,
-    weight: WEIGHT_S,
+    'fill-color': COLOR_DARK70,
+    'fill-opacity': OPACITY_S,
+    // 'line-width': WEIGHT_S,
   },
   [POLYGON_DEFAULT]: {
     ...borderStyles,
-    fillOpacity: OPACITY_N,
-    dashArray: '5,10',
+    'fill-opacity': OPACITY_N,
+    // 'line-dasharray': [5, 10],
   },
 };
 
-export const getOptions = ({ type, onClick, options: override }) => {
-  const preset = STYLES[type];
-  const interactive = Boolean(onClick);
+export const getPaintOptions = (type) => STYLES[type];
 
-  return { ...preset, interactive, ...override };
-};
+export const getTypeProp = () => PropTypes.oneOf([
+  POLYGON_ACTIVE,
+  POLYGON_HIGHLIGHTED,
+  POLYGON_SOLID,
+  POLYGON_THIN,
+  POLYGON_DEFAULT,
+]);
