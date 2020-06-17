@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import { NavigationControl } from 'mapbox-gl';
+
 import clsx from 'clsx';
+import { userMapboxComponent } from './hooks';
+import { getStyle } from './utils';
 
 
 const Map = (props) => {
@@ -11,7 +14,6 @@ const Map = (props) => {
 
     credentials,
 
-    animate,
     locked,
     lockedMobile,
     noAttribution,
@@ -24,22 +26,30 @@ const Map = (props) => {
     ...rest
   } = props;
 
-  const MapboxMap = ReactMapboxGl({
-    apiUrl: null,
-    interactive: !locked && !lockedMobile,
-    attributionControl: !noAttribution,
-  });
+  const MapboxComponent = userMapboxComponent(locked, lockedMobile, noAttribution);
+  if (!MapboxComponent) return null;
+
+  const className = clsx('c-map', passedClassName);
+  const zoom = defaultZoom ? [defaultZoom] : undefined;
+  const fitBounds = bounds || undefined;
+  const center = defaultView || undefined;
+  const style = getStyle(credentials);
+
+  const handleLoad = (map) => {
+    map.addControl(new NavigationControl());
+    if (onLoad) onLoad(map);
+  };
 
   return (
-    <MapboxMap
+    <MapboxComponent
       {...rest}
-      style="https://api.maptiler.com/maps/streets/style.json?key=h5gjGa1Ak2h0KgddSpXq"
+      {...{ className, fitBounds, zoom, center, style }}
+      onStyleLoad={handleLoad}
     />
   );
 };
 
 Map.defaultProps = {
-  animate: false,
   locked: false,
   lockedMobile: true,
   noAttribution: false,
@@ -51,14 +61,11 @@ Map.propTypes = {
 
   credentials: PropTypes.object,
 
-  animate: PropTypes.bool.isRequired,
   locked: PropTypes.bool.isRequired,
   lockedMobile: PropTypes.bool.isRequired,
   noAttribution: PropTypes.bool.isRequired,
 
-  bounds: PropTypes.arrayOf(
-    PropTypes.arrayOf(PropTypes.number),
-  ),
+  bounds: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   defaultView: PropTypes.arrayOf(PropTypes.number),
   defaultZoom: PropTypes.number,
 

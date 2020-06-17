@@ -41,8 +41,9 @@ gulp.task('preview:clean', () => require('del')([ASSETS_FOLDER]));
 
 gulp.task('preview:babel', () => {
   const bundler = require('browserify')(browserifyOptions);
-  const watcher = require('browserify-incremental')(bundler, cacheOptions);
+  bundler.external('mapbox-gl/dist/mapbox-gl.css');
 
+  const watcher = require('browserify-incremental')(bundler, cacheOptions);
   watcher.transform(require('babelify').configure({ extensions: ['.es'] }));
 
   return watcher

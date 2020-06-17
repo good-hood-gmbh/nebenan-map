@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import MapContext from '../map/context';
+// import MapContext from '../map/context';
 
 
 class MapComponent extends PureComponent {
@@ -26,7 +26,5 @@ class MapComponent extends PureComponent {
   // update(prevProps) {}
   // destroy() {}
 }
-
-MapComponent.contextType = MapContext;
 
 export default MapComponent;

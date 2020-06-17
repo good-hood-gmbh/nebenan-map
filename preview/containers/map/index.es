@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
-
 import Checkbox from 'nebenan-form/lib/checkbox';
 import Select from 'nebenan-form/lib/select';
 import Input from 'nebenan-form/lib/input';
-
 import Header from '../../components/header';
 
+import { maptiler } from '../../config';
 import content from '../../sample_data';
+
 import {
   POLYGON_ACTIVE,
   POLYGON_HIGHLIGHTED,
@@ -65,10 +65,6 @@ const pinMarkerTypes = [
   PIN_MARKER_BLUE,
 ];
 
-
-// To enable maptiler pass key in credentials
-let maptilerCredentials;
-
 class MapPreview extends PureComponent {
   constructor(props) {
     super(props);
@@ -77,7 +73,6 @@ class MapPreview extends PureComponent {
       mapLocked: false,
       mapLockedMobile: true,
       mapNoAttr: false,
-      mapAnimate: true,
       mapBoundsIndex: 0,
 
       polygonType: POLYGON_ACTIVE,
@@ -104,19 +99,17 @@ class MapPreview extends PureComponent {
       mapLocked,
       mapLockedMobile,
       mapNoAttr,
-      mapAnimate,
       mapBoundsIndex,
     } = this.state;
 
     return (
       <div className="preview-section">
         <Map
-          credentials={maptilerCredentials}
+          credentials={maptiler}
           bounds={content.polygons[mapBoundsIndex]}
           locked={mapLocked}
           lockedMobile={mapLockedMobile}
           noAttribution={mapNoAttr}
-          animate={mapAnimate}
           onLoad={this.handleAction}
         />
         <div className="preview-map-controls">
@@ -126,7 +119,6 @@ class MapPreview extends PureComponent {
           <Checkbox defaultChecked={mapLocked} onUpdate={this.changeState.bind(this, 'mapLocked')} label="Locked" />
           <Checkbox defaultChecked={mapLockedMobile} onUpdate={this.changeState.bind(this, 'mapLockedMobile')} label="Locked Mobile" />
           <Checkbox defaultChecked={mapNoAttr} onUpdate={this.changeState.bind(this, 'mapNoAttr')} label="No Attribution" />
-          <Checkbox defaultChecked={mapAnimate} onUpdate={this.changeState.bind(this, 'mapAnimate')} label="Animate" />
         </div>
       </div>
     );
@@ -140,7 +132,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} bounds={content.polygons[0]}>
           <Polygon
             area={content.polygons[0]}
             type={polygonType}
@@ -162,7 +154,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} bounds={content.polygons[0]}>
           <PinMarker
             position={content.markers[0]}
             type={pinMarkerType}
@@ -190,7 +182,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} bounds={content.polygons[0]}>
           <CirleMarker position={content.markers[0]} content={markerContent} />
           <EyecatherMarker position={content.markers[1]} content={markerContent} />
         </Map>
@@ -204,7 +196,7 @@ class MapPreview extends PureComponent {
   renderMisc() {
     return (
       <div className="preview-section">
-        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} bounds={content.polygons[0]}>
           <ImageMarker
             position={content.markers[0]}
             image={content.profileImage}
@@ -225,7 +217,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <Map credentials={maptilerCredentials} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} bounds={content.polygons[0]}>
           <Circle
             center={content.markers[0]}
             radius={2000}
