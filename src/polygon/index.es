@@ -1,36 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Layer, Source } from 'react-mapbox-gl';
-import { getPaintOptions, getTypeProp } from './utils';
+import { getFillPaint, getLinePaint, getTypeProp, getGeoJSON } from './utils';
 
 
 const Polygon = (props) => {
   const {
     type,
     area,
-    ...rest
   } = props;
 
-  const geoJSON = {
-    type: 'geojson',
-    data: {
-      type: 'Feature',
-      geometry: {
-        type: 'Polygon',
-        coordinates: [area],
-      },
-    },
-  };
+  const fillPaint = getFillPaint(type);
+  const linePaint = getLinePaint(type);
+
+  let fillLayer;
+  if (fillPaint) {
+    fillLayer = <Layer type="fill" sourceId="polygon" paint={fillPaint} />;
+  }
+
+  let lineLayer;
+  if (linePaint) {
+    lineLayer = <Layer type="line" sourceId="polygon" paint={linePaint} />;
+  }
 
   return (
     <>
-      <Source geoJsonSource={geoJSON} id="polygon" />
-      <Layer
-        {...rest}
-        type="fill"
-        paint={getPaintOptions(type)}
-        sourceId="polygon"
-      />
+      <Source geoJsonSource={getGeoJSON(area)} id="polygon" />
+      {fillLayer}
+      {lineLayer}
     </>
   );
 };

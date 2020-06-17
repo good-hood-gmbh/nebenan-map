@@ -4,7 +4,7 @@ import { NavigationControl } from 'mapbox-gl';
 
 import clsx from 'clsx';
 import { userMapboxComponent } from './hooks';
-import { getStyle, getFitBounds } from './utils';
+import { getStyle, getLngLatBounds } from './utils';
 
 
 const Map = (props) => {
@@ -30,16 +30,16 @@ const Map = (props) => {
 
   const className = clsx('c-map', passedClassName);
   const zoom = defaultZoom ? [defaultZoom] : undefined;
-  const fitBounds = getFitBounds(bounds);
+  const fitBounds = bounds || undefined;
   const center = defaultView || undefined;
   const style = getStyle(credentials);
 
   const handleLoad = (map) => {
     map.addControl(new NavigationControl());
     if (fitBounds) {
-      map.fitBounds(fitBounds, {
-        linear: true,
+      map.fitBounds(getLngLatBounds(bounds), {
         padding: 20,
+        animate: false,
       });
     }
 
@@ -49,8 +49,7 @@ const Map = (props) => {
   return (
     <MapboxComponent
       {...rest}
-      {...{ className, zoom, center, style }}
-      fitBounds={bounds || undefined}
+      {...{ className, zoom, fitBounds, center, style }}
       onStyleLoad={handleLoad}
     />
   );

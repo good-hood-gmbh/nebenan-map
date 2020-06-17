@@ -7,7 +7,6 @@ import {
   WEIGHT_S,
   WEIGHT_L,
 
-  OPACITY_N,
   OPACITY_S,
   OPACITY_M,
 } from '../constants';
@@ -21,41 +20,46 @@ import {
 } from './constants';
 
 
-const borderStyles = {
-  // 'line-width': WEIGHT_L,
-  // 'line-color': COLOR_DARK70,
+const linePaint = {
+  'line-width': WEIGHT_L,
+  'line-color': COLOR_DARK70,
 };
 
-const STYLES = {
+const FILL_STYLES = {
   [POLYGON_ACTIVE]: {
-    ...borderStyles,
     'fill-color': COLOR_ACTION,
     'fill-opacity': OPACITY_S,
   },
   [POLYGON_HIGHLIGHTED]: {
-    ...borderStyles,
     'fill-color': COLOR_DARK70,
     'fill-opacity': OPACITY_M,
   },
   [POLYGON_SOLID]: {
-    ...borderStyles,
     'fill-color': COLOR_DARK70,
     'fill-opacity': OPACITY_S,
   },
   [POLYGON_THIN]: {
-    ...borderStyles,
     'fill-color': COLOR_DARK70,
     'fill-opacity': OPACITY_S,
-    // 'line-width': WEIGHT_S,
-  },
-  [POLYGON_DEFAULT]: {
-    ...borderStyles,
-    'fill-opacity': OPACITY_N,
-    // 'line-dasharray': [5, 10],
   },
 };
 
-export const getPaintOptions = (type) => STYLES[type];
+const LINE_STYLES = {
+  [POLYGON_ACTIVE]: linePaint,
+  [POLYGON_HIGHLIGHTED]: linePaint,
+  [POLYGON_SOLID]: linePaint,
+  [POLYGON_THIN]: {
+    ...linePaint,
+    'line-width': WEIGHT_S,
+  },
+  [POLYGON_DEFAULT]: {
+    ...linePaint,
+    'line-dasharray': [2, 4],
+  },
+};
+
+export const getFillPaint = (type) => FILL_STYLES[type];
+export const getLinePaint = (type) => LINE_STYLES[type];
 
 export const getTypeProp = () => PropTypes.oneOf([
   POLYGON_ACTIVE,
@@ -64,3 +68,14 @@ export const getTypeProp = () => PropTypes.oneOf([
   POLYGON_THIN,
   POLYGON_DEFAULT,
 ]);
+
+export const getGeoJSON = (area) => ({
+  type: 'geojson',
+  data: {
+    type: 'Feature',
+    geometry: {
+      type: 'Polygon',
+      coordinates: [area],
+    },
+  },
+});
