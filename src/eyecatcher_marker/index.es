@@ -4,27 +4,23 @@ import clsx from 'clsx';
 import Marker from '../marker';
 
 
-const EyecatcherMarker = (props) => {
-  const { content, className, ...cleanProps } = props;
-  const iconClass = clsx('c-eyecatcher_marker', className);
-
-  const html = (
-    `<div class="c-eyecatcher_marker-container">
-      ${content}
+const EyecatcherMarker = ({
+  children,
+  className,
+  content,
+  ...rest
+}) => (
+  <Marker {...rest} className={clsx('c-eyecatcher_marker', className)}>
+    <div className="c-eyecatcher_marker-container">
+      {content}
     </div>`
-  );
-
-  const icon = {
-    html,
-    className: iconClass,
-    iconSize: false,
-  };
-
-  return <Marker {...cleanProps} divIcon={icon} />;
-};
+    {children}
+  </Marker>
+);
 
 EyecatcherMarker.propTypes = {
   className: PropTypes.string,
+  children: PropTypes.node,
   content: PropTypes.string,
 };
 
