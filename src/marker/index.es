@@ -20,9 +20,10 @@ const Marker = ({
 
 Marker.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
+  // TODO: implement using popup
   tooltip: PropTypes.string,
 
-  // TODO: find out where they are used outside package
+  // TODO: find out where this props are used outside package
   // options: PropTypes.object,
   // divIcon: PropTypes.object,
   // icon: PropTypes.object,

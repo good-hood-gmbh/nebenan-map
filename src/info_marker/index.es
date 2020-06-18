@@ -4,24 +4,20 @@ import clsx from 'clsx';
 import Marker from '../marker';
 
 
-const InfoMarker = (props) => {
-  const { small, className, ...cleanProps } = props;
-  const iconClass = clsx('c-info_marker', className, { 'is-small': small });
-
-  const icon = {
-    className: iconClass,
-    iconSize: false,
-    html: '<i class="icon-i" />',
-  };
-
-  return <Marker {...cleanProps} divIcon={icon} />;
-};
-
-InfoMarker.defaultProps = {
-  small: false,
-};
+const InfoMarker = ({
+  children,
+  className,
+  small,
+  ...rest
+}) => (
+  <Marker {...rest} className={clsx('c-info_marker', className, { 'is-small': small })}>
+    <i className="icon-i" />
+    {children}
+  </Marker>
+);
 
 InfoMarker.propTypes = {
+  children: PropTypes.node,
   className: PropTypes.string,
   small: PropTypes.bool.isRequired,
 };
