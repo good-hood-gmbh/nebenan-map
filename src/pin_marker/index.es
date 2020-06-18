@@ -14,23 +14,14 @@ import {
 import Marker from '../marker';
 
 
-const PinMarker = (props) => {
-  const { type, ...cleanProps } = props;
-
-  const icon = {
-    iconUrl: `/images/map/pin-${type}.svg`,
-    iconSize: [45, 45],
-    iconAnchor: [22, 45],
-
-    iconRetinaUrl: null,
-    shadowUrl: null,
-    shadowRetinaUrl: null,
-    shadowSize: null,
-    shadowAnchor: null,
-  };
-
-  return <Marker {...cleanProps} icon={icon} />;
-};
+const PinMarker = ({
+  type,
+  ...rest
+}) => (
+  <Marker {...rest}>
+    <img src={`/images/map/pin-${type}.svg`} alt="" />
+  </Marker>
+);
 
 PinMarker.defaultProps = {
   type: PIN_MARKER_GRAY,

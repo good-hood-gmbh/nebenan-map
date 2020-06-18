@@ -1,7 +1,6 @@
 /* eslint react/no-unused-prop-types: "off" */
 import PropTypes from 'prop-types';
 import MapComponent from '../base';
-import withMarker from '../marker/with_marker';
 
 
 class MarkerPopup extends MapComponent {
@@ -11,7 +10,7 @@ class MarkerPopup extends MapComponent {
   }
 
   create() {
-    const { popup: createPopup } = require('leaflet');
+    // const { popup: createPopup } = require('leaflet');
     const { content, className, options: baseOptions, defaultOpen, marker } = this.props;
     const options = { ...baseOptions, className };
 
@@ -41,7 +40,7 @@ MarkerPopup.propTypes = {
   options: PropTypes.object,
   defaultOpen: PropTypes.bool.isRequired,
 
-  marker: PropTypes.object.isRequired,
+  marker: PropTypes.object,
 };
 
-export default withMarker(MarkerPopup);
+export default MarkerPopup;
