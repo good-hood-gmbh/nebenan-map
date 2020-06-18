@@ -1,25 +1,40 @@
-import { COLOR_ACTION, COLOR_BASE, WEIGHT_L } from '../constants';
+import PropTypes from 'prop-types';
+import { COLOR_ACTION, COLOR_BASE, WEIGHT_L, OPACITY_S } from '../constants';
 import { CIRCLE_ACTIVE, CIRCLE_DEFAULT } from './constants';
 
 
 const STYLES = {
   [CIRCLE_ACTIVE]: {
-    color: COLOR_ACTION,
-    fillColor: COLOR_ACTION,
-    weight: WEIGHT_L,
-    interactive: false,
-    radius: 300,
+    'circle-opacity': OPACITY_S,
+    'circle-stroke-width': WEIGHT_L,
+    'circle-stroke-color': COLOR_ACTION,
+    'circle-color': COLOR_ACTION,
+    'circle-radius': 300,
   },
+
   [CIRCLE_DEFAULT]: {
-    color: COLOR_BASE,
-    fillColor: COLOR_BASE,
-    weight: WEIGHT_L,
-    interactive: false,
-    radius: 750,
+    'circle-opacity': OPACITY_S,
+    'circle-stroke-width': WEIGHT_L,
+    'circle-stroke-color': COLOR_BASE,
+    'circle-color': COLOR_BASE,
+    'circle-radius': 300,
   },
 };
 
-export const getOptions = ({ type, radius }) => {
-  const preset = STYLES[type];
-  return { ...preset, interactive: false, radius };
-};
+export const getTypeProp = () => PropTypes.oneOf([
+  CIRCLE_ACTIVE,
+  CIRCLE_DEFAULT,
+]);
+
+export const getPaint = (type, radius) => ({ ...STYLES[type], 'circle-radius': radius });
+
+export const getGeoJSON = (center) => ({
+  type: 'geojson',
+  data: {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: center,
+    },
+  },
+});

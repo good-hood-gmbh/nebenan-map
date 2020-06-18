@@ -104,6 +104,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
+        <h2>Map</h2>
         <Map
           credentials={maptiler}
           bounds={content.polygons[mapBoundsIndex]}
@@ -132,6 +133,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
+        <h2>Polygon</h2>
         <Map credentials={maptiler} bounds={content.polygons[0]}>
           <Polygon
             area={content.polygons[0]}
@@ -154,6 +156,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
+        <h2>Marker with popup</h2>
         <Map credentials={maptiler} bounds={content.polygons[0]}>
           <PinMarker
             position={content.markers[0]}
@@ -182,6 +185,7 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
+        <h2>CircleMarker, EyecatherMarker</h2>
         <Map credentials={maptiler} bounds={content.polygons[0]}>
           <CirleMarker position={content.markers[0]} content={markerContent} />
           <EyecatherMarker position={content.markers[1]} content={markerContent} />
@@ -196,6 +200,7 @@ class MapPreview extends PureComponent {
   renderMisc() {
     return (
       <div className="preview-section">
+        <h2>ImageMarker, InfoMarker, LabelMarker</h2>
         <Map credentials={maptiler} bounds={content.polygons[0]}>
           <ImageMarker
             position={content.markers[0]}
@@ -217,10 +222,11 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
+        <h2>Circle</h2>
         <Map credentials={maptiler} bounds={content.polygons[0]}>
           <Circle
             center={content.markers[0]}
-            radius={2000}
+            radius={100}
             type={circleType}
           />
         </Map>
