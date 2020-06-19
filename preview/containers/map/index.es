@@ -34,7 +34,7 @@ import Circle from '../../../lib/circle';
 
 import PinMarker from '../../../lib/pin_marker';
 import CirleMarker from '../../../lib/circle_marker';
-import EyecatherMarker from '../../../lib/eyecatcher_marker';
+import EyecatcherMarker from '../../../lib/eyecatcher_marker';
 import InfoMarker from '../../../lib/info_marker';
 import ImageMarker from '../../../lib/image_marker';
 import LabelMarker from '../../../lib/label_marker';
@@ -185,10 +185,10 @@ class MapPreview extends PureComponent {
 
     return (
       <div className="preview-section">
-        <h2>CircleMarker, EyecatherMarker</h2>
+        <h2>CircleMarker, EyecatcherMarker</h2>
         <Map credentials={maptiler} bounds={content.polygons[0]}>
           <CirleMarker position={content.markers[0]} content={markerContent} />
-          <EyecatherMarker position={content.markers[1]} content={markerContent} />
+          <EyecatcherMarker position={content.markers[1]} content={markerContent} />
         </Map>
         <div className="preview-map-controls">
           <Input defaultValue={markerContent} onUpdate={this.changeState.bind(this, 'markerContent')} label="Content" />
