@@ -3,7 +3,7 @@ import ReactMapboxGl from 'react-mapbox-gl';
 import { getMedia, media } from '../utils';
 
 
-export const userMapboxComponent = (locked, lockedMobile, noAttribution) => {
+export const useMapboxComponent = (locked, lockedMobile, noAttribution) => {
   const [, setState] = useState();
   const ref = useRef(null);
 

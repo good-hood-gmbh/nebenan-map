@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavigationControl } from 'mapbox-gl';
 
 import clsx from 'clsx';
-import { userMapboxComponent } from './hooks';
+import { useMapboxComponent } from './hooks';
 import { getStyle, getLngLatBounds } from './utils';
 
 
@@ -25,7 +25,7 @@ const Map = (props) => {
     ...rest
   } = props;
 
-  const MapboxComponent = userMapboxComponent(locked, lockedMobile, noAttribution);
+  const MapboxComponent = useMapboxComponent(locked, lockedMobile, noAttribution);
   if (!MapboxComponent) return null;
 
   const className = clsx('c-map', passedClassName);
