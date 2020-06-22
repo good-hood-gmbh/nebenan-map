@@ -12,7 +12,10 @@ export const userMapboxComponent = (locked, lockedMobile, noAttribution) => {
     const interactive = isMobile ? !lockedMobile : !locked;
 
     ref.current = ReactMapboxGl({
-      interactive,
+      dragPan: interactive,
+      keyboard: false,
+      doubleClickZoom: false,
+      scrollZoom: false,
       injectCSS: false,
       apiUrl: null,
       attributionControl: !noAttribution,

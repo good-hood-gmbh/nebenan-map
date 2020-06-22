@@ -33,13 +33,11 @@ import Polygon from '../../../lib/polygon';
 import Circle from '../../../lib/circle';
 
 import PinMarker from '../../../lib/pin_marker';
-import CirleMarker from '../../../lib/circle_marker';
+import CircleMarker from '../../../lib/circle_marker';
 import EyecatcherMarker from '../../../lib/eyecatcher_marker';
 import InfoMarker from '../../../lib/info_marker';
 import ImageMarker from '../../../lib/image_marker';
 import LabelMarker from '../../../lib/label_marker';
-
-import MarkerPopup from '../../../lib/marker_popup';
 
 
 const polygonTypes = [
@@ -161,17 +159,17 @@ class MapPreview extends PureComponent {
           <PinMarker
             position={content.markers[0]}
             type={pinMarkerType}
-            onPopupOpen={this.handleAction}
-            onPopupClose={this.handleAction}
-          >
-            <MarkerPopup
-              defaultOpen
-              content="Lorem lorem"
-              options={{
-                offset: [0, -40],
-              }}
-            />
-          </PinMarker>
+            popupContent="Lorem lorem"
+            popupOffset={[-5, -30]}
+          />
+
+          <PinMarker
+            position={content.markers[1]}
+            type={pinMarkerType}
+            popupDefaultState
+            popupContent="Lorem lorem"
+            popupOffset={[-5, -30]}
+          />
         </Map>
         <div className="preview-map-controls">
           <Select options={pinMarkerTypes} defaultValue={pinMarkerType} onUpdate={this.changeState.bind(this, 'pinMarkerType')} label="Type" />
@@ -187,8 +185,8 @@ class MapPreview extends PureComponent {
       <div className="preview-section">
         <h2>CircleMarker, EyecatcherMarker</h2>
         <Map credentials={maptiler} bounds={content.polygons[0]}>
-          <CirleMarker position={content.markers[0]} content={markerContent} />
-          <EyecatcherMarker position={content.markers[1]} content={markerContent} />
+          <CircleMarker position={content.markers[0]}>{markerContent}</CircleMarker>
+          <EyecatcherMarker position={content.markers[1]}>{markerContent}</EyecatcherMarker>
         </Map>
         <div className="preview-map-controls">
           <Input defaultValue={markerContent} onUpdate={this.changeState.bind(this, 'markerContent')} label="Content" />
@@ -209,7 +207,7 @@ class MapPreview extends PureComponent {
           />
           <InfoMarker position={content.markers[1]} />
           <InfoMarker position={content.markers[2]} small />
-          <LabelMarker position={content.markers[3]} content="LoLoL" />
+          <LabelMarker position={content.markers[3]}>LoLoL</LabelMarker>
         </Map>
       </div>
     );

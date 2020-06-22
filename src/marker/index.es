@@ -1,36 +1,19 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Marker as MapboxMarker } from 'react-mapbox-gl';
+import { useMarker } from './hooks';
 
-
-const Marker = ({
-  position,
-  tooltip,
-
-  onPopupOpen,
-  onPopupClose,
-  ...rest
-}) => (
-  <MapboxMarker
-    {...rest}
-    coordinates={position}
-    anchor="bottom"
-  />
-);
+const Marker = (props) => {
+  useMarker(props);
+  return null;
+};
 
 Marker.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
   position: PropTypes.arrayOf(PropTypes.number),
-  // TODO: implement using popup
-  tooltip: PropTypes.string,
 
-  // TODO: find out where this props are used outside package
-  // options: PropTypes.object,
-  // divIcon: PropTypes.object,
-  // icon: PropTypes.object,
-
-  // TODO: Move to Popup?
-  onPopupOpen: PropTypes.func,
-  onPopupClose: PropTypes.func,
+  popupContent: PropTypes.node,
+  popupDefaultState: PropTypes.bool,
+  popupOffset: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default Marker;

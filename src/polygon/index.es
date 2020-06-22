@@ -8,6 +8,8 @@ const Polygon = (props) => {
   const {
     type,
     area,
+    // TODO: implement
+    // onClick,
   } = props;
 
   const fillPaint = getFillPaint(type);
@@ -18,16 +20,11 @@ const Polygon = (props) => {
     fillLayer = <Layer type="fill" sourceId="polygon" paint={fillPaint} />;
   }
 
-  let lineLayer;
-  if (linePaint) {
-    lineLayer = <Layer type="line" sourceId="polygon" paint={linePaint} />;
-  }
-
   return (
     <>
       <Source geoJsonSource={getGeoJSON(area)} id="polygon" />
       {fillLayer}
-      {lineLayer}
+      <Layer type="line" sourceId="polygon" paint={linePaint} />
     </>
   );
 };
@@ -35,6 +32,7 @@ const Polygon = (props) => {
 Polygon.propTypes = {
   type: getTypeProp().isRequired,
   area: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+  // onClick: PropTypes.func,
 };
 
 export default Polygon;
