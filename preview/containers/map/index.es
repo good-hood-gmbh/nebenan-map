@@ -101,25 +101,36 @@ class MapPreview extends PureComponent {
     } = this.state;
 
     return (
-      <div className="preview-section">
-        <h2>Map</h2>
-        <Map
-          credentials={maptiler}
-          bounds={content.polygons[mapBoundsIndex]}
-          locked={mapLocked}
-          lockedMobile={mapLockedMobile}
-          noAttribution={mapNoAttr}
-          onLoad={this.handleAction}
-        />
-        <div className="preview-map-controls">
-          <Select options={[0, 1]} defaultValue={mapBoundsIndex} onUpdate={this.changeState.bind(this, 'mapBoundsIndex')} label="View" />
+      <>
+        <div className="preview-section">
+          <h2>Map</h2>
+          <Map
+            credentials={maptiler}
+            bounds={content.polygons[mapBoundsIndex]}
+            locked={mapLocked}
+            lockedMobile={mapLockedMobile}
+            noAttribution={mapNoAttr}
+            onLoad={this.handleAction}
+          />
+          <div className="preview-map-controls">
+            <Select options={[0, 1]} defaultValue={mapBoundsIndex} onUpdate={this.changeState.bind(this, 'mapBoundsIndex')} label="View" />
+          </div>
+          <div className="preview-map-controls">
+            <Checkbox defaultChecked={mapLocked} onUpdate={this.changeState.bind(this, 'mapLocked')} label="Locked" />
+            <Checkbox defaultChecked={mapLockedMobile} onUpdate={this.changeState.bind(this, 'mapLockedMobile')} label="Locked Mobile" />
+            <Checkbox defaultChecked={mapNoAttr} onUpdate={this.changeState.bind(this, 'mapNoAttr')} label="No Attribution" />
+          </div>
         </div>
-        <div className="preview-map-controls">
-          <Checkbox defaultChecked={mapLocked} onUpdate={this.changeState.bind(this, 'mapLocked')} label="Locked" />
-          <Checkbox defaultChecked={mapLockedMobile} onUpdate={this.changeState.bind(this, 'mapLockedMobile')} label="Locked Mobile" />
-          <Checkbox defaultChecked={mapNoAttr} onUpdate={this.changeState.bind(this, 'mapNoAttr')} label="No Attribution" />
+
+        <div className="preview-section">
+          <h2>Map default view and zoom</h2>
+          <Map
+            credentials={maptiler}
+            defaultView={content.markers[1]}
+            defaultZoom={15}
+          />
         </div>
-      </div>
+      </>
     );
   }
 
