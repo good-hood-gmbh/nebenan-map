@@ -1,15 +1,18 @@
 const { assert } = require('chai');
 
 const {
-  reverse,
+  getID,
 } = require('../../lib/utils');
 
 
 describe('utils', () => {
-  it('reverse', () => {
-    const arr = [1, 2, 3];
+  it('getID', () => {
+    const id1 = getID();
+    const id2 = getID();
 
-    assert.notEqual(reverse(arr), arr, 'do not modify original array');
-    assert.deepEqual(reverse(arr), [3, 2, 1], 'reverse items');
+    assert.isString(id1, 'returns a string');
+    assert.lengthOf(id1, 8, 'returns proper length');
+    assert.notEqual(id1, id2, 'ids don\'t match');
+    assert.match(id1, /^[a-f0-9]+$/, 'correct pattern format');
   });
 });

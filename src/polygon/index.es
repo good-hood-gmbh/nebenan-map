@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Layer, Source } from 'react-mapbox-gl';
 import { getFillPaint, getLinePaint, getTypeProp, getGeoJSON } from './utils';
+import { getID } from '../utils';
 
 
 const Polygon = (props) => {
@@ -12,19 +13,20 @@ const Polygon = (props) => {
     // onClick,
   } = props;
 
+  const sourceId = useRef(getID()).current;
   const fillPaint = getFillPaint(type);
   const linePaint = getLinePaint(type);
 
   let fillLayer;
   if (fillPaint) {
-    fillLayer = <Layer type="fill" sourceId="polygon" paint={fillPaint} />;
+    fillLayer = <Layer type="fill" sourceId={sourceId} paint={fillPaint} />;
   }
 
   return (
     <>
-      <Source geoJsonSource={getGeoJSON(area)} id="polygon" />
+      <Source geoJsonSource={getGeoJSON(area)} id={sourceId} />
       {fillLayer}
-      <Layer type="line" sourceId="polygon" paint={linePaint} />
+      <Layer type="line" sourceId={sourceId} paint={linePaint} />
     </>
   );
 };
