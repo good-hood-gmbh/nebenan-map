@@ -11,7 +11,7 @@ export const getStyle = (credentials) => (
 );
 
 export const getLngLatBounds = (bounds) => {
-  if (!bounds) return undefined;
+  if (!Array.isArray(bounds) || !bounds.length) return undefined;
 
   const initial = new LngLatBounds(bounds[0], bounds[0]);
   const collect = (acc, item) => acc.extend(item);
@@ -20,7 +20,7 @@ export const getLngLatBounds = (bounds) => {
 };
 
 export const fitBounds = (map, bounds, animate = true) => {
-  if (bounds) {
+  if (bounds && bounds.length) {
     map.fitBounds(getLngLatBounds(bounds), {
       padding: 20,
       animate,

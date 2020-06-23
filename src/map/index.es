@@ -2,13 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
-import { useMapboxComponent, useDefaultCenterAndZoom, useMapInit, useBoundsUpdate } from './hooks';
+import {
+  useMapboxComponent,
+  useDefaultCenterAndZoom,
+  useMapInit,
+  useBoundsUpdate,
+  useContextValue,
+} from './hooks';
 import { getStyle } from './utils';
+
+import { Provider } from './context';
 
 
 const Map = (props) => {
   const {
     className: passedClassName,
+    children,
 
     credentials,
 
@@ -25,8 +34,11 @@ const Map = (props) => {
   } = props;
 
   const MapboxComponent = useMapboxComponent(locked, lockedMobile, noAttribution);
+  const [boundsSet, contextValue] = useContextValue();
+
   const [center, zoom] = useDefaultCenterAndZoom(defaultZoom, defaultView, bounds);
-  const [mapRef, loadHandler] = useMapInit(bounds, onLoad);
+  const [mapRef, loadHandler] = useMapInit(bounds, boundsSet, onLoad);
+
   useBoundsUpdate(mapRef, bounds);
 
   if (!MapboxComponent) return null;
@@ -39,7 +51,9 @@ const Map = (props) => {
       center={center}
       style={getStyle(credentials)}
       onStyleLoad={loadHandler}
-    />
+    >
+      <Provider value={contextValue}>{children}</Provider>
+    </MapboxComponent>
   );
 };
 
@@ -51,6 +65,7 @@ Map.defaultProps = {
 
 Map.propTypes = {
   className: PropTypes.string,
+  children: PropTypes.node,
 
   credentials: PropTypes.object,
 

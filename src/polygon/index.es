@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Layer, Source } from 'react-mapbox-gl';
 import { getFillPaint, getLinePaint, getTypeProp, getGeoJSON } from './utils';
+import { useAddBoundsToMap } from './hooks';
 import { getID } from '../utils';
 
 
@@ -12,6 +13,8 @@ const Polygon = (props) => {
     // TODO: implement
     // onClick,
   } = props;
+
+  useAddBoundsToMap(area);
 
   const sourceId = useRef(getID()).current;
   const fillPaint = getFillPaint(type);

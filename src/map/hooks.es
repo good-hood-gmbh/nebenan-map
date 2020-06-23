@@ -38,14 +38,25 @@ export const useDefaultCenterAndZoom = (defaultZoom, defaultView, bounds) => {
   return [centerRef.current, zoomRef.current];
 };
 
-export const useMapInit = (defaultBounds, callback) => {
+export const useMapInit = (defaultBounds, childrenBoundsSet, callback) => {
   const mapRef = useRef(false);
 
-  const loadHandler = (map) => {
-    map.addControl(new NavigationControl());
-    fitBounds(map, defaultBounds, false);
+  const fitChildrenBounds = () => {
+    const merged = [...childrenBoundsSet].reduce((acc, bounds) => acc.concat(bounds), []);
+    fitBounds(mapRef.current, merged, false);
+  };
 
+  const loadHandler = (map) => {
     mapRef.current = map;
+    map.addControl(new NavigationControl());
+
+    if (defaultBounds) {
+      fitBounds(map, defaultBounds, false);
+    } else {
+      // Wait for children render
+      process.nextTick(fitChildrenBounds);
+    }
+
     if (callback) callback(map);
   };
 
@@ -58,4 +69,16 @@ export const useBoundsUpdate = (mapRef, bounds) => {
       fitBounds(mapRef.current, bounds);
     }
   }, [bounds]);
+};
+
+export const useContextValue = () => {
+  const boundsSet = useRef(new Set()).current;
+  const contextValue = useRef({
+    addBounds: (value) => {
+      boundsSet.add(value);
+      return () => boundsSet.delete(value);
+    },
+  }).current;
+
+  return [boundsSet, contextValue];
 };
