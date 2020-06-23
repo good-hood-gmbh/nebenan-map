@@ -9,6 +9,7 @@ import {
 
   OPACITY_S,
   OPACITY_M,
+  OPACITY_N,
 } from '../constants';
 
 import {
@@ -41,6 +42,10 @@ const FILL_STYLES = {
   [POLYGON_THIN]: {
     'fill-color': COLOR_DARK70,
     'fill-opacity': OPACITY_S,
+  },
+  [POLYGON_DEFAULT]: {
+    'fill-color': COLOR_DARK70,
+    'fill-opacity': OPACITY_N,
   },
 };
 

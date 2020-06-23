@@ -7,7 +7,7 @@ export const getBoundsCenter = (bounds) => ([
 ]);
 
 export const getStyle = (credentials) => (
-  `https://api.maptiler.com/maps/streets/style.json?key=${credentials.key}`
+  `https://api.maptiler.com/maps/075de9e7-0503-4e15-87af-7b99e074604c/style.json?key=${credentials.key}`
 );
 
 export const getLngLatBounds = (bounds) => {

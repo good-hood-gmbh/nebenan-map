@@ -10,26 +10,19 @@ const Polygon = (props) => {
   const {
     type,
     area,
-    // TODO: implement
-    // onClick,
+    onClick,
   } = props;
 
   useAddBoundsToMap(area);
 
   const sourceId = useRef(getID()).current;
-  const fillPaint = getFillPaint(type);
-  const linePaint = getLinePaint(type);
-
-  let fillLayer;
-  if (fillPaint) {
-    fillLayer = <Layer type="fill" sourceId={sourceId} paint={fillPaint} />;
-  }
+  const layerId = useRef(getID()).current;
 
   return (
     <>
       <Source geoJsonSource={getGeoJSON(area)} id={sourceId} />
-      {fillLayer}
-      <Layer type="line" sourceId={sourceId} paint={linePaint} />
+      <Layer id={layerId} type="fill" sourceId={sourceId} paint={getFillPaint(type)} onClick={onClick} />
+      <Layer type="line" sourceId={sourceId} paint={getLinePaint(type)} />
     </>
   );
 };
@@ -37,7 +30,7 @@ const Polygon = (props) => {
 Polygon.propTypes = {
   type: getTypeProp().isRequired,
   area: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  // onClick: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 export default Polygon;

@@ -20,6 +20,8 @@ export const useMapboxComponent = (locked, lockedMobile, noAttribution) => {
       doubleClickZoom: false,
       scrollZoom: false,
       injectCSS: false,
+      dragRotate: false,
+      pitchWithRotate: false,
       apiUrl: null,
       attributionControl: !noAttribution,
     });
