@@ -130,6 +130,14 @@ class MapPreview extends PureComponent {
             defaultZoom={15}
           />
         </div>
+
+        <div className="preview-section">
+          <h2>Map autofit polygons</h2>
+          <Map credentials={maptiler}>
+            <Polygon area={content.polygons[0]} type={POLYGON_SOLID} />
+            <Polygon area={content.polygons[1]} type={POLYGON_SOLID} />
+          </Map>
+        </div>
       </>
     );
   }
