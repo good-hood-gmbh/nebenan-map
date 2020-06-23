@@ -1,6 +1,11 @@
 import { LngLatBounds } from 'mapbox-gl';
 
 
+export const getBoundsCenter = (bounds) => ([
+  (bounds[0][0] + bounds[1][0]) / 2,
+  (bounds[0][1] + bounds[1][1]) / 2,
+]);
+
 export const getStyle = (credentials) => (
   `https://api.maptiler.com/maps/streets/style.json?key=${credentials.key}`
 );
@@ -12,4 +17,13 @@ export const getLngLatBounds = (bounds) => {
   const collect = (acc, item) => acc.extend(item);
 
   return bounds.reduce(collect, initial);
+};
+
+export const fitBounds = (map, bounds, animate = true) => {
+  if (bounds) {
+    map.fitBounds(getLngLatBounds(bounds), {
+      padding: 20,
+      animate,
+    });
+  }
 };

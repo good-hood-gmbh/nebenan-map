@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import ReactMapboxGl from 'react-mapbox-gl';
+import { NavigationControl } from 'mapbox-gl';
+
 import { getMedia, media } from '../utils';
+import { getBoundsCenter, fitBounds } from './utils';
 
 
 export const useMapboxComponent = (locked, lockedMobile, noAttribution) => {
@@ -26,4 +29,33 @@ export const useMapboxComponent = (locked, lockedMobile, noAttribution) => {
   }, [locked, lockedMobile, noAttribution]);
 
   return ref.current;
+};
+
+export const useDefaultCenterAndZoom = (defaultZoom, defaultView, bounds) => {
+  const zoomRef = useRef(defaultZoom ? [defaultZoom] : undefined);
+  const centerRef = useRef((bounds ? getBoundsCenter(bounds) : defaultView) || undefined);
+
+  return [centerRef.current, zoomRef.current];
+};
+
+export const useMapInit = (defaultBounds, callback) => {
+  const mapRef = useRef(false);
+
+  const loadHandler = (map) => {
+    map.addControl(new NavigationControl());
+    fitBounds(map, defaultBounds, false);
+
+    mapRef.current = map;
+    if (callback) callback(map);
+  };
+
+  return [mapRef, loadHandler];
+};
+
+export const useBoundsUpdate = (mapRef, bounds) => {
+  useEffect(() => {
+    if (mapRef.current) {
+      fitBounds(mapRef.current, bounds);
+    }
+  }, [bounds]);
 };
