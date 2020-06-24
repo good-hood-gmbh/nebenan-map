@@ -178,7 +178,7 @@ class MapPreview extends PureComponent {
     return (
       <div className="preview-section">
         <h2>Marker with popup</h2>
-        <Map credentials={maptiler} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} fitPadding={50}>
           <PinMarker
             position={content.markers[0]}
             type={pinMarkerType}
@@ -207,7 +207,7 @@ class MapPreview extends PureComponent {
     return (
       <div className="preview-section">
         <h2>CircleMarker, EyecatcherMarker</h2>
-        <Map credentials={maptiler} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} fitPadding={100}>
           <CircleMarker position={content.markers[0]}>{markerContent}</CircleMarker>
           <EyecatcherMarker position={content.markers[1]}>{markerContent}</EyecatcherMarker>
         </Map>
@@ -222,7 +222,7 @@ class MapPreview extends PureComponent {
     return (
       <div className="preview-section">
         <h2>ImageMarker, InfoMarker, LabelMarker</h2>
-        <Map credentials={maptiler} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} fitPadding={50}>
           <ImageMarker
             position={content.markers[0]}
             image={content.profileImage}
@@ -244,7 +244,7 @@ class MapPreview extends PureComponent {
     return (
       <div className="preview-section">
         <h2>Circle</h2>
-        <Map credentials={maptiler} bounds={content.polygons[0]}>
+        <Map credentials={maptiler} defaultZoom={10}>
           <Circle
             center={content.markers[0]}
             radius={100}

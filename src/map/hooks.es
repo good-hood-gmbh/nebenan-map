@@ -1,6 +1,7 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import ReactMapboxGl from 'react-mapbox-gl';
 import { getMedia, media } from '../utils';
+import MapContext from './context';
 
 
 export const useMapboxComponent = (locked, lockedMobile, noAttribution) => {
@@ -48,4 +49,9 @@ export const useContextValue = () => {
   }).current;
 
   return [bounds, contextValue];
+};
+
+export const useChildrenBounds = (area) => {
+  const map = useContext(MapContext);
+  useEffect(() => map && map.addBounds(area), [map]);
 };

@@ -24,6 +24,7 @@ const Map = (props) => {
     bounds,
     defaultView,
     defaultZoom,
+    fitPadding,
 
     onLoad,
     ...rest
@@ -41,6 +42,11 @@ const Map = (props) => {
   };
 
   const fitBounds = bounds || mergeChildrenBounds(childrenBounds);
+  const fitOptions = {
+    animate,
+    padding: fitPadding,
+  };
+  if (defaultZoom) fitOptions.maxZoom = defaultZoom;
 
   return (
     <MapboxComponent
@@ -49,7 +55,7 @@ const Map = (props) => {
       zoom={zoom}
       center={center}
       fitBounds={getBoundingBox(fitBounds)}
-      fitBoundsOptions={{ animate, padding: 20 }}
+      fitBoundsOptions={fitOptions}
       style={getStyle(credentials)}
       onStyleLoad={loadHandler}
     >
@@ -63,6 +69,7 @@ Map.defaultProps = {
   locked: false,
   lockedMobile: true,
   noAttribution: false,
+  fitPadding: 20,
 };
 
 Map.propTypes = {
@@ -79,6 +86,7 @@ Map.propTypes = {
   bounds: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   defaultView: PropTypes.arrayOf(PropTypes.number),
   defaultZoom: PropTypes.number,
+  fitPadding: PropTypes.number.isRequired,
 
   onLoad: PropTypes.func,
 };

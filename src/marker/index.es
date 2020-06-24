@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MapContext } from 'react-mapbox-gl';
+import { useChildrenBounds } from '../map/hooks';
 import { createMarker, createPopup } from './utils';
 
 
@@ -14,6 +15,7 @@ const Marker = ({
   popupOffset,
 }) => {
   const map = useContext(MapContext);
+  useChildrenBounds([position]);
 
   useEffect(() => {
     if (!map) return;

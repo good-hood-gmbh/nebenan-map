@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Layer, Source } from 'react-mapbox-gl';
+
+import { useChildrenBounds } from '../map/hooks';
 import { getPaint, getGeoJSON } from './utils';
 import { getID } from '../utils';
 import { CIRCLE_ACTIVE, CIRCLE_DEFAULT } from './constants';
@@ -12,6 +14,7 @@ const Circle = ({
   radius,
 }) => {
   const sourceId = useRef(getID()).current;
+  useChildrenBounds([center]);
 
   return (
     <>
