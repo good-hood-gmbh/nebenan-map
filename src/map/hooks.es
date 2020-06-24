@@ -65,10 +65,10 @@ export const useMapInit = (defaultBounds, childrenBoundsSet, callback) => {
   return [mapRef, loadHandler];
 };
 
-export const useBoundsUpdate = (mapRef, bounds) => {
+export const useBoundsUpdate = (mapRef, bounds, animate) => {
   useEffect(() => {
     if (mapRef.current) {
-      fitBounds(mapRef.current, bounds);
+      fitBounds(mapRef.current, bounds, animate);
     }
   }, [bounds]);
 };

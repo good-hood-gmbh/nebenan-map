@@ -1,10 +1,10 @@
+import { maptiler } from 'uni-config';
 import React, { PureComponent } from 'react';
 import Checkbox from 'nebenan-form/lib/checkbox';
 import Select from 'nebenan-form/lib/select';
 import Input from 'nebenan-form/lib/input';
 import Header from '../../components/header';
 
-import { maptiler } from '../../config';
 import content from '../../sample_data';
 
 import {
@@ -71,6 +71,7 @@ class MapPreview extends PureComponent {
       mapLocked: false,
       mapLockedMobile: true,
       mapNoAttr: false,
+      mapAnimate: true,
       mapBoundsIndex: 0,
 
       polygonType: POLYGON_ACTIVE,
@@ -97,6 +98,7 @@ class MapPreview extends PureComponent {
       mapLocked,
       mapLockedMobile,
       mapNoAttr,
+      mapAnimate,
       mapBoundsIndex,
     } = this.state;
 
@@ -110,6 +112,7 @@ class MapPreview extends PureComponent {
             locked={mapLocked}
             lockedMobile={mapLockedMobile}
             noAttribution={mapNoAttr}
+            animate={mapAnimate}
             onLoad={this.handleAction}
           />
           <div className="preview-map-controls">
@@ -119,6 +122,7 @@ class MapPreview extends PureComponent {
             <Checkbox defaultChecked={mapLocked} onUpdate={this.changeState.bind(this, 'mapLocked')} label="Locked" />
             <Checkbox defaultChecked={mapLockedMobile} onUpdate={this.changeState.bind(this, 'mapLockedMobile')} label="Locked Mobile" />
             <Checkbox defaultChecked={mapNoAttr} onUpdate={this.changeState.bind(this, 'mapNoAttr')} label="No Attribution" />
+            <Checkbox defaultChecked={mapAnimate} onUpdate={this.changeState.bind(this, 'mapAnimate')} label="Animate" />
           </div>
         </div>
 

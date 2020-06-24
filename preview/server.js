@@ -2,6 +2,7 @@ require('@babel/register')({ extensions: ['.es'] });
 const app = require('express')();
 const serveStatic = require('serve-static');
 const morgan = require('morgan');
+const config = require('uni-config');
 
 const React = require('react');
 const { renderToString } = require('react-dom/server');
@@ -26,6 +27,7 @@ const getHTML = (content) => (`<!DOCTYPE html>
   </head>
   <body>
     <main id="main">${content}</main>
+    <script>__appConfig__=${JSON.stringify(config)}</script>
     <script src="/assets/script.js" async></script>
   </body>
 </html>

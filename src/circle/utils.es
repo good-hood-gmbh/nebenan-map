@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { COLOR_ACTION, COLOR_BASE, WEIGHT_L, OPACITY_S } from '../constants';
 import { CIRCLE_ACTIVE, CIRCLE_DEFAULT } from './constants';
 
@@ -20,11 +19,6 @@ const STYLES = {
     'circle-radius': 300,
   },
 };
-
-export const getTypeProp = () => PropTypes.oneOf([
-  CIRCLE_ACTIVE,
-  CIRCLE_DEFAULT,
-]);
 
 export const getPaint = (type, radius) => ({ ...STYLES[type], 'circle-radius': radius });
 

@@ -1,8 +1,41 @@
+import { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useMarker } from './hooks';
+import { MapContext } from 'react-mapbox-gl';
+import { createMarker, createPopup } from './utils';
 
-const Marker = (props) => {
-  useMarker(props);
+
+const Marker = ({
+  className,
+  children,
+  position,
+
+  popupDefaultState,
+  popupContent,
+  popupOffset,
+}) => {
+  const map = useContext(MapContext);
+
+  useEffect(() => {
+    if (!map) return;
+
+    const marker = createMarker(global, children, className).setLngLat(position).addTo(map);
+
+    let popup;
+    if (popupContent) {
+      popup = createPopup(global, popupContent, { offset: popupOffset });
+      marker.setPopup(popup);
+    }
+
+    if (popupDefaultState) {
+      marker.togglePopup();
+    }
+
+    return () => {
+      marker.remove();
+      if (popup) popup.remove();
+    };
+  }, [map, children, popupContent, popupOffset]);
+
   return null;
 };
 

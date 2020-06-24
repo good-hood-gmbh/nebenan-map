@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Layer, Source } from 'react-mapbox-gl';
-import { getTypeProp, getPaint, getGeoJSON } from './utils';
+import { getPaint, getGeoJSON } from './utils';
 import { getID } from '../utils';
+import { CIRCLE_ACTIVE, CIRCLE_DEFAULT } from './constants';
 
 
 const Circle = ({
@@ -21,7 +22,10 @@ const Circle = ({
 };
 
 Circle.propTypes = {
-  type: getTypeProp().isRequired,
+  type: PropTypes.oneOf([
+    CIRCLE_ACTIVE,
+    CIRCLE_DEFAULT,
+  ]).isRequired,
   center: PropTypes.arrayOf(PropTypes.number).isRequired,
   radius: PropTypes.number.isRequired,
 };

@@ -21,6 +21,7 @@ const Map = (props) => {
 
     credentials,
 
+    animate,
     locked,
     lockedMobile,
     noAttribution,
@@ -39,7 +40,7 @@ const Map = (props) => {
   const [center, zoom] = useDefaultCenterAndZoom(defaultZoom, defaultView, bounds);
   const [mapRef, loadHandler] = useMapInit(bounds, boundsSet, onLoad);
 
-  useBoundsUpdate(mapRef, bounds);
+  useBoundsUpdate(mapRef, bounds, animate);
 
   if (!MapboxComponent) return null;
 
@@ -58,6 +59,7 @@ const Map = (props) => {
 };
 
 Map.defaultProps = {
+  animate: false,
   locked: false,
   lockedMobile: true,
   noAttribution: false,
@@ -69,6 +71,7 @@ Map.propTypes = {
 
   credentials: PropTypes.object,
 
+  animate: PropTypes.bool.isRequired,
   locked: PropTypes.bool.isRequired,
   lockedMobile: PropTypes.bool.isRequired,
   noAttribution: PropTypes.bool.isRequired,

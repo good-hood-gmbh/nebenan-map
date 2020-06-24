@@ -93,6 +93,10 @@
   },
   "dependencies": {
     "mapbox-gl": "^1.11.0",
-    "react-mapbox-gl": "^4.8.6"
+    "react-mapbox-gl": "^4.8.6",
+    "uni-config": "^2.1.1"
+  },
+  "browser": {
+    "uni-config": "uni-config/client.js"
   }
 }

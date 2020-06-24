@@ -35,5 +35,5 @@ node_modules/*
 lib/
 style.css
 preview/public/
-preview/config.es
+config/local.js
 build/.browserify-cache.json
