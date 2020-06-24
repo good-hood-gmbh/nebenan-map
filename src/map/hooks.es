@@ -4,16 +4,24 @@ import { getMedia, media } from '../utils';
 import MapContext from './context';
 
 
-export const useMapboxComponent = (locked, lockedMobile, noAttribution) => {
+export const useLocked = (locked, lockedMobile) => {
+  const [isLocked, setLocked] = useState(locked);
+
+  useEffect(() => {
+    const isMobile = !getMedia(global, media.mediaM);
+    setLocked(isMobile ? lockedMobile : locked);
+  }, [locked, lockedMobile]);
+
+  return isLocked;
+};
+
+export const useMapboxComponent = (isLocked, noAttribution) => {
   const [, setState] = useState();
   const ref = useRef(null);
 
   useEffect(() => {
-    const isMobile = !getMedia(global, media.mediaM);
-    const interactive = isMobile ? !lockedMobile : !locked;
-
     ref.current = ReactMapboxGl({
-      dragPan: interactive,
+      dragPan: !isLocked,
       keyboard: false,
       doubleClickZoom: false,
       scrollZoom: false,
@@ -26,7 +34,7 @@ export const useMapboxComponent = (locked, lockedMobile, noAttribution) => {
 
     // Force re-render
     setState({});
-  }, [locked, lockedMobile, noAttribution]);
+  }, [isLocked, noAttribution]);
 
   return ref.current;
 };

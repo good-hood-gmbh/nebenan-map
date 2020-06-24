@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavigationControl } from 'mapbox-gl';
 
 import clsx from 'clsx';
-import { useMapboxComponent, useDefaultCenterAndZoom, useContextValue } from './hooks';
+import { useMapboxComponent, useDefaultCenterAndZoom, useContextValue, useLocked } from './hooks';
 import { getStyle, getBoundingBox, mergeChildrenBounds } from './utils';
 
 import { Provider } from './context';
@@ -30,14 +30,15 @@ const Map = (props) => {
     ...rest
   } = props;
 
-  const MapboxComponent = useMapboxComponent(locked, lockedMobile, noAttribution);
+  const isLocked = useLocked(locked, lockedMobile);
+  const MapboxComponent = useMapboxComponent(isLocked, noAttribution);
   const [center, zoom] = useDefaultCenterAndZoom(defaultZoom, defaultView);
   const [childrenBounds, contextValue] = useContextValue();
 
   if (!MapboxComponent) return null;
 
   const loadHandler = (map) => {
-    map.addControl(new NavigationControl());
+    if (!isLocked) map.addControl(new NavigationControl());
     if (onLoad) onLoad(map);
   };
 
