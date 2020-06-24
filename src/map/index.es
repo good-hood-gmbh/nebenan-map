@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavigationControl } from 'mapbox-gl';
 
 import clsx from 'clsx';
-import {
-  useMapboxComponent,
-  useDefaultCenterAndZoom,
-  useMapInit,
-  useBoundsUpdate,
-  useContextValue,
-} from './hooks';
-import { getStyle } from './utils';
+import { useMapboxComponent, useDefaultCenterAndZoom, useContextValue } from './hooks';
+import { getStyle, getBoundingBox, mergeChildrenBounds } from './utils';
 
 import { Provider } from './context';
 
@@ -35,14 +30,17 @@ const Map = (props) => {
   } = props;
 
   const MapboxComponent = useMapboxComponent(locked, lockedMobile, noAttribution);
-  const [boundsSet, contextValue] = useContextValue();
-
-  const [center, zoom] = useDefaultCenterAndZoom(defaultZoom, defaultView, bounds);
-  const [mapRef, loadHandler] = useMapInit(bounds, boundsSet, onLoad);
-
-  useBoundsUpdate(mapRef, bounds, animate);
+  const [center, zoom] = useDefaultCenterAndZoom(defaultZoom, defaultView);
+  const [childrenBounds, contextValue] = useContextValue();
 
   if (!MapboxComponent) return null;
+
+  const loadHandler = (map) => {
+    map.addControl(new NavigationControl());
+    if (onLoad) onLoad(map);
+  };
+
+  const fitBounds = bounds || mergeChildrenBounds(childrenBounds);
 
   return (
     <MapboxComponent
@@ -50,6 +48,8 @@ const Map = (props) => {
       className={clsx('c-map', passedClassName)}
       zoom={zoom}
       center={center}
+      fitBounds={getBoundingBox(fitBounds)}
+      fitBoundsOptions={{ animate, padding: 20 }}
       style={getStyle(credentials)}
       onStyleLoad={loadHandler}
     >
