@@ -1,12 +1,12 @@
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { MapContext } from 'react-mapbox-gl';
+import { Marker as MapboxMarker } from 'mapbox-gl';
 import { useChildrenBounds } from '../map/hooks';
-import { createMarker, createPopup } from './utils';
+import { createPopup } from './utils';
 
 
 const Marker = ({
-  className,
   children,
   position,
 
@@ -14,18 +14,19 @@ const Marker = ({
   popupContent,
   popupOffset,
 }) => {
+  const nodeRef = useRef();
   const map = useContext(MapContext);
   useChildrenBounds([position]);
 
   useEffect(() => {
     if (!map) return;
 
-    const marker = createMarker(global, children, className).setLngLat(position).addTo(map);
+    const marker = new MapboxMarker(nodeRef.current).setLngLat(position).addTo(map);
 
     let popup;
     if (popupContent) {
       popup = createPopup(global, popupContent, { offset: popupOffset });
-      marker.setPopup(popup);
+      marker.setPopup(popup.layer);
     }
 
     if (popupDefaultState) {
@@ -34,16 +35,15 @@ const Marker = ({
 
     return () => {
       marker.remove();
-      if (popup) popup.remove();
+      if (popup) popup.destroy();
     };
   }, [map, children, popupContent, popupOffset]);
 
-  return null;
+  return <div ref={nodeRef}>{children}</div>;
 };
 
 Marker.propTypes = {
   children: PropTypes.node,
-  className: PropTypes.string,
   position: PropTypes.arrayOf(PropTypes.number),
 
   popupContent: PropTypes.node,

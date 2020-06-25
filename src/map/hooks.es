@@ -21,7 +21,7 @@ export const useMapboxComponent = (isLocked, noAttribution) => {
 
   useEffect(() => {
     ref.current = ReactMapboxGl({
-      dragPan: !isLocked,
+      interactive: !isLocked,
       keyboard: false,
       doubleClickZoom: false,
       scrollZoom: false,
